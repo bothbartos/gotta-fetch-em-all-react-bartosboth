@@ -1,5 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+import PokemonStats from './Components/PokemonStats';
+import RenderPokemons from './Components/RenderFight';
 
 function App() {
   const [data, setData] = useState(false);
@@ -13,9 +15,13 @@ function App() {
     fetchData();
   }, []);
 
+  const testPoke = 'https://pokeapi.co/api/v2/pokemon/ditto'
+
   return (
     <div className="App">
-      {data ? console.log(data) : console.log('no fetch')}
+      <PokemonStats url = {testPoke}/>
+      <RenderPokemons usersPokeUrl = {testPoke} enemyPokeUrl = {testPoke}/>
+      
     </div>
   );
 }
