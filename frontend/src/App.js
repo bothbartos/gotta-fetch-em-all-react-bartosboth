@@ -15,7 +15,6 @@ function App() {
 
   return (
     <div className="App">
-      {data ? console.log(data) : console.log('no fetch')}
     </div>
   );
 }
