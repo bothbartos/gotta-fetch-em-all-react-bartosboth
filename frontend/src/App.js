@@ -12,11 +12,26 @@ function App() {
   const [areas, setAreas] = useState(null);
   const [userPokemons, setAllPokemons] = useState([]);
   const [selectedUserPokemon, setUserPokemon] = useState([]);
-  const [selectedEnemy, setEnemy] = useState([])
+  const [selectedEnemy, setEnemy] = useState([]);
+  const [secondArea, isSecondArea] = useState(false);
+
 
   const ownStarterPokes = ["https://pokeapi.co/api/v2/pokemon/bulbasaur",
   "https://pokeapi.co/api/v2/pokemon/charizard",
   "https://pokeapi.co/api/v2/pokemon/poliwhirl"];
+
+  useEffect(() =>{
+    async function fetchOwnPokes(){
+      const ownPokes = []
+      ownStarterPokes.map(async (pokemon) => {
+        const pokes = await fetchData(pokemon);
+        ownPokes.push(pokes)        
+      }) 
+      setAllPokemons(ownPokes)
+    }
+    fetchOwnPokes();
+    
+  }, [])
   
   useEffect(() => {
     async function fetchLocations() {
@@ -42,9 +57,10 @@ function App() {
   return (
     <div className="App">
       <button onClick={returnToHome}>Back</button>
-      {data
+      {secondArea
         ? data.map((location) => (
             <ListElement
+            areas={areas}
               text={location.name}
               key={location.name}
               url={location.url}
@@ -54,7 +70,7 @@ function App() {
               setAreas={setAreas}
             ></ListElement>
           ))
-        : console.log("no fetch")}
+        : <SelectPokemon/>}
     </div>
   );
 }
