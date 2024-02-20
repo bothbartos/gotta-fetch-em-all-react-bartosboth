@@ -1,17 +1,11 @@
-import { useState } from "react";
-import SelectPokemon from "./SelectUserPokemon";
-
 function ListElement(props) {
- 
-
-
   const text = props.text;
   const url = props.url;
   const setData = props.setData;
   const isAreasShown = props.isAreasShown;
   const setIsAreasShown = props.setIsAreasShown;
   const setAreas = props.setAreas;
-  const selcetedArea = props.areas
+  const setIsSecondArea = props.setIsSecondArea;
 
   async function getAreas(url) {
     const response = await fetch(url);
@@ -20,16 +14,13 @@ function ListElement(props) {
       setData(areas.areas);
       setIsAreasShown(true);
       setAreas(areas.areas);
-    }else{
-      setAreas(areas)
-      isSecondArea(true);
+    } else {
+      setAreas(areas);
+      setIsSecondArea(true);
     }
   }
 
-  
-
-  return (secondArea?
-  <li onClick={async () => await getAreas(url)}>{text}</li> :
-  <SelectPokemon></SelectPokemon>);
+  return <li onClick={async () => await getAreas(url)}>{text}</li>;
 }
+
 export default ListElement;
