@@ -1,9 +1,11 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import SelectPokemon from "./Components/SelectPokemon";
+import SelectUserPokemon from "./Components/SelectUserPokemon";
 
 function App() {
-  const [userPokemons, setUserPokemons] = useState([]);
+  const [userPokemons, setAllPokemons] = useState([]);
+  const [selectedUserPokemon, setUserPokemon] = useState([]);
   const [selectedEnemy, setEnemy] = useState([])
 
   const ownStarterPokes = ["https://pokeapi.co/api/v2/pokemon/bulbasaur",
@@ -39,10 +41,12 @@ function App() {
       <button onClick = {logData} >debug</button>
       {userPokemons
       ?
-      <SelectPokemon userPokemons = {userPokemons}
-      setUserPokemons={setUserPokemons}
+      <SelectUserPokemon userPokemons = {userPokemons}
+      setUserPokemons={setAllPokemons}
       setEnemy={setEnemy}
-      selectedEnemy={selectedEnemy}/> : "No data"
+      selectedEnemy={selectedEnemy}
+      selectedUserPokemon ={selectedUserPokemon}
+      setUserPokemon={setUserPokemon}/> : "No data"
       }
     </div>
   );

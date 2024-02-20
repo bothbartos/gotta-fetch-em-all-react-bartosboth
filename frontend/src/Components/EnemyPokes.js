@@ -8,6 +8,7 @@ function EnemyPokes(props){
 
   
   function onClick(){
+    
     setEnemy(enemy)
     
   }
