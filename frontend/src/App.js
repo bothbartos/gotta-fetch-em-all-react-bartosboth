@@ -19,13 +19,14 @@ function App() {
   "https://pokeapi.co/api/v2/pokemon/poliwhirl"];
   
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch('https://pokeapi.co/api/v2/location');
-      const data = await response.json();
-      setData(data);
+    async function fetchLocations() {
+      const data = await fetchData('https://pokeapi.co/api/v2/location');
+      setData(data.results);
+      setLocations(data.results)
     }
-    fetchData();
+    fetchLocations();
   }, []);
+
   async function fetchData(url) {
     const response = await fetch(url);
     const data = await response.json();
