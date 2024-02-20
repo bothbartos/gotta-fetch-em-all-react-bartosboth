@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function EnemyPokes(props){
-  const url = props.pokemon.url;
   const name = props.pokemon.name;
   const setEnemy = props.setEnemy;
+  const enemy = props.pokemon;
+  
 
+  
   function onClick(){
-    setEnemy(props.pokemon)
+    setEnemy(enemy)
     
   }
 
-  return (
+  return (<div>
+    <img src={enemy.sprites.front_default}></img>
+
     <li onClick={onClick}>{name}</li>
+
+  </div>
   )
 }
 
