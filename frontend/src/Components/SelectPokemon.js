@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import EnemyPokes from "./EnemyPokes";
 
-function SelectPokemon({userPokemons, setUserPokemons, selectedEnemy, setEnemy}){
+function SelectPokemon({userPokemons, setUserPokemons, selectedEnemy, setEnemy, locationUrl}){
   const [encounterPokemons, setEncounterPokemons] = useState([]);
 
-
+  const url = 
 
   useEffect(() =>{
     async function fetchEncounters() {
-      const encounterURL = "https://pokeapi.co/api/v2/location-area/1/";
-      const response = await fetch(encounterURL);
+      const response = await fetch(url);
       const locationAreaData = await response.json()
       
       const enemiesPromise = locationAreaData.pokemon_encounters.map(async (pokemon) =>{
