@@ -6,7 +6,7 @@ import SelectPokemon from "./Components/SelectPokemon";
 import SelectOwnPokemon from "./Components/SelectOwnPokemon";
 
   
-  function App() {
+function App() {
   const [locations, setLocations] = useState(null);
   const [shownData, setData] = useState(null);
   const [isAreasShown, setIsAreasShown] = useState(false);
@@ -19,9 +19,9 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
   const [isCombatOn, setIsCombatOn] = useState(false);
 
   const ownStarterPokes = [
-    "https://pokeapi.co/api/v2/pokemon/bulbasaur",
-    "https://pokeapi.co/api/v2/pokemon/charizard",
-    "https://pokeapi.co/api/v2/pokemon/poliwhirl",
+    "bulbasaur",
+    "charizard",
+    "poliwhirl",
   ];
 
   useEffect(() => {
@@ -33,7 +33,7 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
     fetchLocations();
     async function fetchPlayerPokemons() {
       const playerPokemonsPromises = ownStarterPokes.map(async (url) => {
-        const pokemon = await fetchData(url);
+        const pokemon = await fetchData(`https://pokeapi.co/api/v2/pokemon/${url}`);
         return pokemon;
       });
       const playerPokemons = await Promise.all(playerPokemonsPromises);
@@ -78,7 +78,7 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
         <div>
 
           <h3>Fight!</h3>
-          <RenderFight usersPoke = {selectedUserPokemon} enemyPoke = {selectedEnemy}/>
+          <RenderFight usersPoke = {selectedUserPokemon} enemyPoke = {selectedEnemy} userPokemons={userPokemons} setAllPokemons={setAllPokemons}/>
 
         </div>
       ) : !areaSelected ? (
