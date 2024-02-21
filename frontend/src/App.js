@@ -2,7 +2,6 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import ListElement from "./Components/ListElement";
 import SelectPokemon from "./Components/SelectPokemon";
-import SelectUserPokemon from "./Components/SelectUserPokemon";
 import SelectOwnPokemon from "./Components/SelectOwnPokemon";
 
 function App() {

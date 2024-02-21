@@ -4,7 +4,7 @@ function DisplayPokemon(props) {
 
   return (
     <div onClick={() => setIsCombatOn(true)}>
-      <img src={pokemon.sprites.front_default}></img>
+      <img src={pokemon.sprites.front_default} alt="pokimon"></img>
       <li>{pokemon.name}</li>
     </div>
   );
