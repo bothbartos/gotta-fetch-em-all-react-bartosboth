@@ -3,52 +3,60 @@ import React, { useEffect, useState } from "react";
 function getStats(pokemon) {
   const newStats = {};
 
-        pokemon.stats.forEach(element => {
-            const nameOfStat = element.stat.name;
-            const valueOfStat = element['base_stat']
-            
-            newStats[nameOfStat] = valueOfStat;
-        });
-        newStats.maxHp = newStats.hp
-        
-        return newStats;
+  pokemon.stats.forEach((element) => {
+    const nameOfStat = element.stat.name;
+    const valueOfStat = element["base_stat"];
+
+    newStats[nameOfStat] = valueOfStat;
+  });
+  newStats.maxHp = newStats.hp;
+
+  return newStats;
 }
 
-function checkOnFight (hp, setEndOfFight, nameOfWinner, setWinner){
-    if (hp < 1){
-        setEndOfFight(true)
-        setWinner(nameOfWinner)
-    }
+function checkOnFight(hp, setEndOfFight, nameOfWinner, setWinner) {
+  if (hp < 1) {
+    setEndOfFight(true);
+    setWinner(nameOfWinner);
+  }
 }
 
-function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons){
-    const enemyDmg = enemyStats.attack;
-    const userDmg = userStats.attack;
-    const enemyDef = enemyStats.defense;
-    const userDef = userStats.defense;
-    let userHp = userStats.hp;
-    let enemyHp = enemyStats.hp;
+function handleContact(
+  enemyStats,
+  setEnemyStats,
+  setUserStats,
+  userStats,
+  endOfFight,
+  setEndOfFight,
+  setWinner,
+  pokemons
+) {
+  const enemyDmg = enemyStats.attack;
+  const userDmg = userStats.attack;
+  const enemyDef = enemyStats.defense;
+  const userDef = userStats.defense;
+  let userHp = userStats.hp;
+  let enemyHp = enemyStats.hp;
 
-    if (endOfFight){
-        console.log('end')
-    } else {
-        let recentDmg = dmg(userDmg, enemyDef);
-        enemyHp -= recentDmg;
-        setEnemyStats({...enemyStats, hp: enemyStats.hp - recentDmg})
-        checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner)
-        
-        setTimeout(() => {
-            recentDmg = dmg(enemyDmg, userDef);
-            userHp -= recentDmg;
-            setUserStats({...userStats, hp: userStats.hp - recentDmg})
-            checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner)
-        }, 200)
-    }
+  if (endOfFight) {
+    console.log("end");
+  } else {
+    let recentDmg = dmg(userDmg, enemyDef);
+    enemyHp -= recentDmg;
+    setEnemyStats({ ...enemyStats, hp: enemyStats.hp - recentDmg });
+    checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner);
+
+    setTimeout(() => {
+      recentDmg = dmg(enemyDmg, userDef);
+      userHp -= recentDmg;
+      setUserStats({ ...userStats, hp: userStats.hp - recentDmg });
+      checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner);
+    }, 200);
+  }
 }
 
-
-function random (min, max){
-    return  Math.floor(Math.random() * (max - min) ) + min;
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function dmg(dmg, def) {
@@ -71,11 +79,13 @@ function RenderFight(props) {
 
   const enemyPoke = props.enemyPoke;
   const usersPoke = props.usersPoke;
+  const userPokemons = props.userPokemons;
+  const setAllPokemons = props.setAllPokemons;
 
   const pokemons = {
     user: usersPoke.name,
-    enemy: enemyPoke.name
-  }
+    enemy: enemyPoke.name,
+  };
 
   useEffect(() => {
     setUserStats(getStats(usersPoke));
