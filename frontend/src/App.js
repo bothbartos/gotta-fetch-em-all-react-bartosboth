@@ -1,12 +1,11 @@
-import './App.css';
-import { useState, useEffect } from 'react';
-import RenderFight from './Components/RenderFight';
+import "./App.css";
+import { useState, useEffect } from "react";
+import RenderFight from "./Components/RenderFight";
 import ListElement from "./Components/ListElement";
 import SelectPokemon from "./Components/SelectPokemon";
 import SelectOwnPokemon from "./Components/SelectOwnPokemon";
 
-  
-  function App() {
+function App() {
   const [locations, setLocations] = useState(null);
   const [shownData, setData] = useState(null);
   const [isAreasShown, setIsAreasShown] = useState(false);
@@ -18,11 +17,7 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
   const [enemySelected, setEnemySelected] = useState(false);
   const [isCombatOn, setIsCombatOn] = useState(false);
 
-  const ownStarterPokes = [
-    "https://pokeapi.co/api/v2/pokemon/bulbasaur",
-    "https://pokeapi.co/api/v2/pokemon/charizard",
-    "https://pokeapi.co/api/v2/pokemon/poliwhirl",
-  ];
+  const ownStarterPokes = ["bulbasaur", "charizard", "poliwhirl"];
 
   useEffect(() => {
     async function fetchLocations() {
@@ -33,7 +28,9 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
     fetchLocations();
     async function fetchPlayerPokemons() {
       const playerPokemonsPromises = ownStarterPokes.map(async (url) => {
-        const pokemon = await fetchData(url);
+        const pokemon = await fetchData(
+          `https://pokeapi.co/api/v2/pokemon/${url}`
+        );
         return pokemon;
       });
       const playerPokemons = await Promise.all(playerPokemonsPromises);
@@ -49,7 +46,7 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
   }
 
   console.log(selectedEnemy);
-  console.log(selectedUserPokemon)
+  console.log(selectedUserPokemon);
 
   function returnToHome() {
     setData(locations);
@@ -58,43 +55,41 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
     setAreaSelected(false);
     setEnemySelected(false);
     setEnemy([]);
-    setIsCombatOn(false)
+    setIsCombatOn(false);
   }
-
-  function logAreas() {
-    console.log(selectedEnemy);
-  }
-
 
   return (
     <div className="App">
-
-      
-      <button onClick={logAreas}>log</button>
-      <button onClick={returnToHome}>Back</button>
+      <nav id="navBar">
+        <button onClick={returnToHome}>Back</button>
+      </nav>
       {isCombatOn ? (
-        
-
         <div>
-
           <h3>Fight!</h3>
-          <RenderFight usersPoke = {selectedUserPokemon} enemyPoke = {selectedEnemy} userPokemons = {userPokemons} setAllPokemons = {setAllPokemons}/>
-
+          <RenderFight
+            usersPoke={selectedUserPokemon}
+            enemyPoke={selectedEnemy}
+            userPokemons={userPokemons}
+            setAllPokemons={setAllPokemons}
+          />
         </div>
       ) : !areaSelected ? (
-        shownData &&
-        shownData.map((location) => (
-          <ListElement
-            text={location.name}
-            key={location.name}
-            url={location.url}
-            setData={setData}
-            isAreasShown={isAreasShown}
-            setIsAreasShown={setIsAreasShown}
-            setAreas={setAreas}
-            setAreaSelected={setAreaSelected}
-          ></ListElement>
-        ))
+        shownData && (
+          <ul>
+            {shownData.map((location) => (
+              <ListElement
+                text={location.name}
+                key={location.name}
+                url={location.url}
+                setData={setData}
+                isAreasShown={isAreasShown}
+                setIsAreasShown={setIsAreasShown}
+                setAreas={setAreas}
+                setAreaSelected={setAreaSelected}
+              ></ListElement>
+            ))}
+          </ul>
+        )
       ) : !enemySelected ? (
         <SelectPokemon
           setEnemySelected={setEnemySelected}
@@ -102,7 +97,11 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
           area={areas}
         ></SelectPokemon>
       ) : (
-        <SelectOwnPokemon userPokemons={userPokemons} setIsCombatOn={setIsCombatOn} setUserPokemon={setUserPokemon}></SelectOwnPokemon>
+        <SelectOwnPokemon
+          userPokemons={userPokemons}
+          setIsCombatOn={setIsCombatOn}
+          setUserPokemon={setUserPokemon}
+        ></SelectOwnPokemon>
       )}
     </div>
   );

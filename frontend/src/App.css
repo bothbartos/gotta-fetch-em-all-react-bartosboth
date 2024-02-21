@@ -53,3 +53,30 @@
     transform: rotate(360deg);
   }
 }
+body{
+  background-image: url("./assets/background_base.jpeg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+ul {
+  margin: 0 auto;
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+li {
+  list-style-type: none;
+  font-size: 1.5rem;
+}
+
+img{
+  image-rendering: pixelated;
+  width: 300px;
+}
+
+#navBar{
+  height: 3rem;
+}
