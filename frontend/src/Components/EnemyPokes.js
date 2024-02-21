@@ -9,13 +9,12 @@ function EnemyPokes(props){
 
   
   function onClick(){
-    
     setEnemy(enemy)
     setEnemySelected(true);
   }
 
   return (<div onClick={onClick}>
-    <img src={enemy.sprites.front_default}></img>
+    <img src={enemy.sprites.front_default} alt="pokimon"></img>
 
     <li >{name}</li>
 

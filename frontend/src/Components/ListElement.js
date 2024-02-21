@@ -20,8 +20,7 @@ function ListElement(props) {
     }
   }
 
-  
-
   return <li onClick={async () => await getAreas(url)}>{text}</li>;
 }
+
 export default ListElement;
