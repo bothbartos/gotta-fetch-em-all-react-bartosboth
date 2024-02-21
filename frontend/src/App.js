@@ -1,10 +1,13 @@
-import "./App.css";
-import { useState, useEffect } from "react";
+import './App.css';
+import { useState, useEffect } from 'react';
+import RenderFight from './Components/RenderFight';
 import ListElement from "./Components/ListElement";
 import SelectPokemon from "./Components/SelectPokemon";
 import SelectOwnPokemon from "./Components/SelectOwnPokemon";
 
-function App() {
+  
+  function App() {
+  const testPoke = 'https://pokeapi.co/api/v2/pokemon/ditto'
   const [locations, setLocations] = useState(null);
   const [shownData, setData] = useState(null);
   const [isAreasShown, setIsAreasShown] = useState(false);
@@ -63,10 +66,19 @@ function App() {
 
   return (
     <div className="App">
+
+      
       <button onClick={logAreas}>log</button>
       <button onClick={returnToHome}>Back</button>
       {isCombatOn ? (
-        <h3>Fight!</h3>
+        
+
+        <div>
+
+          <h3>Fight!</h3>
+          <RenderFight usersPokeUrl = {testPoke} enemyPokeUrl = {testPoke}/>
+
+        </div>
       ) : !areaSelected ? (
         shownData &&
         shownData.map((location) => (
