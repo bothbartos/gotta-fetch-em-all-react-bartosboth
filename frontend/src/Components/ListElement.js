@@ -5,6 +5,7 @@ function ListElement(props) {
   const isAreasShown = props.isAreasShown;
   const setIsAreasShown = props.setIsAreasShown;
   const setAreas = props.setAreas;
+  const setAreaSelected = props.setAreaSelected;
 
   async function getAreas(url) {
     const response = await fetch(url);
@@ -13,6 +14,9 @@ function ListElement(props) {
       setData(areas.areas);
       setIsAreasShown(true);
       setAreas(areas.areas);
+    } else {
+      setAreas(areas)
+      setAreaSelected(true);
     }
   }
 

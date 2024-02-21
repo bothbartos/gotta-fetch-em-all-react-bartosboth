@@ -4,19 +4,20 @@ function EnemyPokes(props){
   const name = props.pokemon.name;
   const setEnemy = props.setEnemy;
   const enemy = props.pokemon;
+  const setEnemySelected = props.setEnemySelected;
   
 
   
   function onClick(){
     
     setEnemy(enemy)
-    
+    setEnemySelected(true);
   }
 
-  return (<div>
+  return (<div onClick={onClick}>
     <img src={enemy.sprites.front_default}></img>
 
-    <li onClick={onClick}>{name}</li>
+    <li >{name}</li>
 
   </div>
   )
