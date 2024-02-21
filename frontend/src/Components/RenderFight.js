@@ -96,9 +96,24 @@ function RenderFight(props) {
     console.log(endOfFight);
     if (endOfFight && winner === pokemons.user) {
       setAllPokemons( [...userPokemons,enemyPoke])
-      console.log(userPokemons);
+    }else if(endOfFight && winner === pokemons.enemy){
+      const fasz = removeLoser()
+      setAllPokemons(fasz)
     }
   },[endOfFight])
+
+  function removeLoser(){
+    const index = userPokemons.findIndex(pokemon => pokemon.name === pokemons.user);
+    if (index !== -1) {
+      const updatedUserPokemons = [
+        ...userPokemons.slice(0, index),
+        ...userPokemons.slice(index +  1)
+      ];
+      console.log(updatedUserPokemons);
+      return updatedUserPokemons;
+    }
+    return userPokemons;
+  }
 
   return (
     <div id="battleField">

@@ -17,7 +17,7 @@ function App() {
   const [enemySelected, setEnemySelected] = useState(false);
   const [isCombatOn, setIsCombatOn] = useState(false);
 
-  const ownStarterPokes = ["bulbasaur", "charizard", "poliwhirl"];
+  const ownStarterPokes = ["bulbasaur", "charizard", "129"];
 
   useEffect(() => {
     async function fetchLocations() {
@@ -70,6 +70,7 @@ function App() {
         <div>
           <h3>Fight!</h3>
           <RenderFight
+            returnToHome={returnToHome}
             usersPoke={selectedUserPokemon}
             enemyPoke={selectedEnemy}
             userPokemons={userPokemons}
