@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-function getStats (pokemon){
-    const newStats = {};
+function getStats(pokemon) {
+  const newStats = {};
 
         pokemon.stats.forEach(element => {
             const nameOfStat = element.stat.name;
@@ -35,13 +35,13 @@ function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endO
         let recentDmg = dmg(userDmg, enemyDef);
         enemyHp -= recentDmg;
         setEnemyStats({...enemyStats, hp: enemyStats.hp - recentDmg})
-        checkOnFight(enemyHp, setEndOfFight, setWinner)
+        checkOnFight(enemyHp, setEndOfFight, 'sajt', setWinner)
         
         setTimeout(() => {
             recentDmg = dmg(enemyDmg, userDef);
             userHp -= recentDmg;
             setUserStats({...userStats, hp: userStats.hp - recentDmg})
-            checkOnFight(userHp, setEndOfFight, setWinner)
+            checkOnFight(userHp, setEndOfFight, 'sonka', setWinner)
         }, 200)
     }
 }
@@ -51,42 +51,31 @@ function random (min, max){
     return  Math.floor(Math.random() * (max - min) ) + min;
 }
 
-function dmg (dmg, def){
-    return Math.round(((((2/5+2)*dmg*60/def)/50)+2)*random(217, 255)/255)
+function dmg(dmg, def) {
+  return Math.round(
+    ((((2 / 5 + 2) * dmg * 60) / def / 50 + 2) * random(217, 255)) / 255
+  );
 }
 
 function RenderFight(props) {
-        
-    const [usersPokemon, setUsersPokemon] = useState(false)
-    const [enemyPokemon, setEnemyPokemon] = useState(false)
+  const [usersPokemon, setUsersPokemon] = useState(false);
+  const [enemyPokemon, setEnemyPokemon] = useState(false);
 
-    const [userStats, setUserStats] = useState(false)
-    const [enemyStats, setEnemyStats] = useState(false)
+  const [userStats, setUserStats] = useState(false);
+  const [enemyStats, setEnemyStats] = useState(false);
 
-    const [endOfFight, setEndOfFight] = useState(false);
-    const [winner, setWinner] = useState(null)
-    
-    const enemyPokeUrl = props.enemyPokeUrl;
-    const usersPokeUrl = props.usersPokeUrl;
+  const [endOfFight, setEndOfFight] = useState(false);
+  const [winner, setWinner] = useState(null)
+  const enemyPoke = props.enemyPoke;
+  const usersPoke = props.usersPoke;
 
-    useEffect(() => {
-        
-        async function fetchPoke(url, role) {
-            const res = await fetch(url);
-            const pokemon = await res.json();
-            if (role === 'user'){
-                setUserStats(getStats(pokemon));
-                setUsersPokemon(pokemon)
-            } else {
-                setEnemyStats(getStats(pokemon));
-                setEnemyPokemon(pokemon)
-            }
-        }
+  useEffect(() => {
+    setUserStats(getStats(usersPoke));
+    setUsersPokemon(usersPoke);
 
-        fetchPoke(enemyPokeUrl, 'enemy')
-        fetchPoke(usersPokeUrl, 'user')
-
-    }, [enemyPokeUrl, usersPokeUrl])
+    setEnemyStats(getStats(enemyPoke));
+    setEnemyPokemon(enemyPoke);
+  }, [enemyPoke, usersPoke]);
 
     return (
         <div>
