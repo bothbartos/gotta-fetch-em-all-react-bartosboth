@@ -65,7 +65,10 @@ function RenderFight(props) {
   const [enemyStats, setEnemyStats] = useState(false);
 
   const [endOfFight, setEndOfFight] = useState(false);
+  const [battleClosing, setBattleClosing] = useState(false)
+  
   const [winner, setWinner] = useState(null)
+
   const enemyPoke = props.enemyPoke;
   const usersPoke = props.usersPoke;
 
@@ -83,11 +86,14 @@ function RenderFight(props) {
   }, [enemyPoke, usersPoke]);
 
   if (endOfFight){
-    
+    setTimeout(() => {
+        setBattleClosing(true)
+    }, 4000);
   }
 
     return (
         <div id="battleField">
+            {battleClosing ? <>{props.returnToHome()}</> : <>
                 
             <div>
                 <h3>{pokemons.user}</h3>
@@ -98,18 +104,20 @@ function RenderFight(props) {
             </div>
 
             <div>
-            {endOfFight ? <p>The winner: {winner}</p> : <>
-            <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons) }>Attack</button>
-                </>}
+                {endOfFight ? <p>The winner: {winner}</p> : <>
+                <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons) }>Attack</button>
+                    </>}
             </div>
             
-        <div>
-            <h3>{pokemons.enemy}</h3>
-            <p>HP: {enemyStats.hp} / {enemyStats.maxHp}</p>
-            {enemyPokemon ?
-             <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
-              <p>Loading...</p>}
-        </div>
+            <div>
+                <h3>{pokemons.enemy}</h3>
+                <p>HP: {enemyStats.hp} / {enemyStats.maxHp}</p>
+                {enemyPokemon ?
+                <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
+                <p>Loading...</p>}
+            </div>
+        </> 
+         }
         </div>
     )
 }

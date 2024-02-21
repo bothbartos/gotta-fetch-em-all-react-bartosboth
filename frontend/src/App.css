@@ -37,12 +37,12 @@
 
 #usersPokemon{
   height: 90%;
-  filter: drop-shadow(gray 4px 4px);
+  filter: drop-shadow(gray 3px 3px);
 }
 
 #enemyPokemon{
   height: 40%;
-  filter: drop-shadow(gray 4px 4px);
+  filter: drop-shadow(gray 3px 3px);
 }
 
 @keyframes App-logo-spin {

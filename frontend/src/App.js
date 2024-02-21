@@ -78,7 +78,7 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
         <div>
 
           <h3>Fight!</h3>
-          <RenderFight usersPoke = {selectedUserPokemon} enemyPoke = {selectedEnemy} userPokemons = {userPokemons} setAllPokemons = {setAllPokemons}/>
+          <RenderFight returnToHome = {returnToHome} usersPoke = {selectedUserPokemon} enemyPoke = {selectedEnemy} userPokemons = {userPokemons} setAllPokemons = {setAllPokemons}/>
 
         </div>
       ) : !areaSelected ? (
