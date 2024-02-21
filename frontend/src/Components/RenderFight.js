@@ -25,13 +25,17 @@ function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endO
     const enemyDef = enemyStats.defense;
     const userDef = userStats.defense;
 
-    setEnemyStats({...enemyStats, hp: enemyStats.hp - dmg(userDmg, enemyDef)})
-    checkOnFight(enemyStats, setEndOfFight)
-    
-    setTimeout(() => {
-        setUserStats({...userStats, hp: userStats.hp - dmg(enemyDmg, userDef)})
-        checkOnFight(userStats, setEndOfFight)
-    }, 200)
+    if (endOfFight){
+        console.log('end')
+    } else {
+        setEnemyStats({...enemyStats, hp: enemyStats.hp - dmg(userDmg, enemyDef)})
+        checkOnFight(enemyStats, setEndOfFight)
+        
+        setTimeout(() => {
+            setUserStats({...userStats, hp: userStats.hp - dmg(enemyDmg, userDef)})
+            checkOnFight(userStats, setEndOfFight)
+        }, 200)
+    }
 }
 
 
