@@ -28,6 +28,23 @@
   color: #61dafb;
 }
 
+#battleField {
+  display: flex;
+  justify-content: space-between;
+  margin: 10% 25% 10% 20%;
+
+}
+
+#usersPokemon{
+  height: 90%;
+  filter: drop-shadow(gray 4px 4px);
+}
+
+#enemyPokemon{
+  height: 40%;
+  filter: drop-shadow(gray 4px 4px);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

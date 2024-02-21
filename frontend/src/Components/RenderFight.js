@@ -21,7 +21,7 @@ function checkOnFight (hp, setEndOfFight, nameOfWinner, setWinner){
     }
 }
 
-function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner){
+function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons){
     const enemyDmg = enemyStats.attack;
     const userDmg = userStats.attack;
     const enemyDef = enemyStats.defense;
@@ -35,13 +35,13 @@ function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endO
         let recentDmg = dmg(userDmg, enemyDef);
         enemyHp -= recentDmg;
         setEnemyStats({...enemyStats, hp: enemyStats.hp - recentDmg})
-        checkOnFight(enemyHp, setEndOfFight, 'sajt', setWinner)
+        checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner)
         
         setTimeout(() => {
             recentDmg = dmg(enemyDmg, userDef);
             userHp -= recentDmg;
             setUserStats({...userStats, hp: userStats.hp - recentDmg})
-            checkOnFight(userHp, setEndOfFight, 'sonka', setWinner)
+            checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner)
         }, 200)
     }
 }
@@ -69,6 +69,11 @@ function RenderFight(props) {
   const enemyPoke = props.enemyPoke;
   const usersPoke = props.usersPoke;
 
+  const pokemons = {
+    user: usersPoke.name,
+    enemy: enemyPoke.name
+  }
+
   useEffect(() => {
     setUserStats(getStats(usersPoke));
     setUsersPokemon(usersPoke);
@@ -77,19 +82,29 @@ function RenderFight(props) {
     setEnemyPokemon(enemyPoke);
   }, [enemyPoke, usersPoke]);
 
+  if (endOfFight){
+    
+  }
+
     return (
-        <div>
+        <div id="battleField">
+                
             <div>
+                <h3>{pokemons.user}</h3>
                 <p>HP: {userStats.hp}/{userStats.maxHp}</p>
                 {usersPokemon ?
                  <img alt="nem je" id="usersPokemon" src={usersPokemon.sprites.other.showdown['back_default']}></img> :
                   <p>Loading...</p>}
-                  <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner) }>Attack</button>
             </div>
-            {endOfFight ? <p>The Winner: {winner}</p> : <p></p>}
-            
+
+            <div>
+            {endOfFight ? <p>The winner: {winner}</p> : <>
+            <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons) }>Attack</button>
+                </>}
+            </div>
             
         <div>
+            <h3>{pokemons.enemy}</h3>
             <p>HP: {enemyStats.hp} / {enemyStats.maxHp}</p>
             {enemyPokemon ?
              <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
