@@ -44,9 +44,7 @@ function App() {
     const data = await response.json();
     return data;
   }
-
-  console.log(selectedEnemy);
-  console.log(selectedUserPokemon);
+  
 
   function returnToHome() {
     setData(locations);
@@ -58,10 +56,15 @@ function App() {
     setIsCombatOn(false);
   }
 
+  function logData(){
+    console.log(userPokemons);
+  }
+
   return (
     <div className="App">
       <nav id="navBar">
         <button onClick={returnToHome}>Back</button>
+        <button onClick={logData}></button>
       </nav>
       {isCombatOn ? (
         <div>
