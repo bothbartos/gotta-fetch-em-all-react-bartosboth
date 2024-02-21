@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import ListElement from "./Components/ListElement";
 import SelectPokemon from "./Components/SelectPokemon";
 
+
 function App() {
   const [locations, setLocations] = useState(null);
   const [data, setData] = useState([]);
@@ -36,7 +37,8 @@ function App() {
     <div className="App">
       <button onClick={returnToHome}>Back</button>
       {!isSecondArea ? (
-        data.map((location) => (
+        <>
+        {data.map((location) => (
           <ListElement
             areas={areas}
             text={location.name}
@@ -48,7 +50,8 @@ function App() {
             setAreas={setAreas}
             setIsSecondArea={setIsSecondArea}
           ></ListElement>
-        ))
+        ))}
+        </>
       ) : (
         <SelectPokemon area={areas}></SelectPokemon>
       )}
