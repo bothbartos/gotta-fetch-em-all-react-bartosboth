@@ -14,7 +14,7 @@ function EnemyPokes(props){
   }
 
   return (<div onClick={onClick}>
-    <img src={enemy.sprites.front_default} alt="pokimon"></img>
+    <img src={enemy.sprites.front_default} alt="pokimon" id="selectPokes"></img>
 
     <li >{name}</li>
 
