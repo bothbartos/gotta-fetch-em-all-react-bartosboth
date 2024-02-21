@@ -9,31 +9,39 @@ function getStats (pokemon){
             
             newStats[nameOfStat] = valueOfStat;
         });
+        newStats.maxHp = newStats.hp
         
         return newStats;
 }
 
-function checkOnFight (stats, setEndOfFight){
-    if (stats.hp < 1){
+function checkOnFight (hp, setEndOfFight, nameOfWinner, setWinner){
+    if (hp < 1){
         setEndOfFight(true)
+        setWinner(nameOfWinner)
     }
 }
 
-function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight){
+function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner){
     const enemyDmg = enemyStats.attack;
     const userDmg = userStats.attack;
     const enemyDef = enemyStats.defense;
     const userDef = userStats.defense;
+    let userHp = userStats.hp;
+    let enemyHp = enemyStats.hp;
 
     if (endOfFight){
         console.log('end')
     } else {
-        setEnemyStats({...enemyStats, hp: enemyStats.hp - dmg(userDmg, enemyDef)})
-        checkOnFight(enemyStats, setEndOfFight)
+        let recentDmg = dmg(userDmg, enemyDef);
+        enemyHp -= recentDmg;
+        setEnemyStats({...enemyStats, hp: enemyStats.hp - recentDmg})
+        checkOnFight(enemyHp, setEndOfFight, setWinner)
         
         setTimeout(() => {
-            setUserStats({...userStats, hp: userStats.hp - dmg(enemyDmg, userDef)})
-            checkOnFight(userStats, setEndOfFight)
+            recentDmg = dmg(enemyDmg, userDef);
+            userHp -= recentDmg;
+            setUserStats({...userStats, hp: userStats.hp - recentDmg})
+            checkOnFight(userHp, setEndOfFight, setWinner)
         }, 200)
     }
 }
@@ -56,6 +64,7 @@ function RenderFight(props) {
     const [enemyStats, setEnemyStats] = useState(false)
 
     const [endOfFight, setEndOfFight] = useState(false);
+    const [winner, setWinner] = useState(null)
     
     const enemyPokeUrl = props.enemyPokeUrl;
     const usersPokeUrl = props.usersPokeUrl;
@@ -82,17 +91,17 @@ function RenderFight(props) {
     return (
         <div>
             <div>
-                <p>HP: {userStats.hp}</p>
+                <p>HP: {userStats.hp}/{userStats.maxHp}</p>
                 {usersPokemon ?
                  <img alt="nem je" id="usersPokemon" src={usersPokemon.sprites.other.showdown['back_default']}></img> :
                   <p>Loading...</p>}
-                  <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight) }>Attack</button>
+                  <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner) }>Attack</button>
             </div>
-            {endOfFight ? <p>win</p> : <p></p>}
+            {endOfFight ? <p>The Winner: {winner}</p> : <p></p>}
             
             
         <div>
-            <p>HP: {enemyStats.hp}</p>
+            <p>HP: {enemyStats.hp} / {enemyStats.maxHp}</p>
             {enemyPokemon ?
              <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
               <p>Loading...</p>}
