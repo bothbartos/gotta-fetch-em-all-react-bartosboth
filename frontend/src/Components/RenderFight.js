@@ -1,44 +1,100 @@
 import React, { useEffect, useState } from "react";
 
-function RenderPokemons(props) {
+function getStats (pokemon){
+    const newStats = {};
 
+        pokemon.stats.forEach(element => {
+            const nameOfStat = element.stat.name;
+            const valueOfStat = element['base_stat']
+            
+            newStats[nameOfStat] = valueOfStat;
+        });
+        
+        return newStats;
+}
+
+function checkOnFight (stats, setEndOfFight){
+    if (stats.hp < 1){
+        setEndOfFight(true)
+    }
+}
+
+function handleContact (enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight){
+    const enemyDmg = enemyStats.attack;
+    const userDmg = userStats.attack;
+    const enemyDef = enemyStats.defense;
+    const userDef = userStats.defense;
+
+    setEnemyStats({...enemyStats, hp: enemyStats.hp - dmg(userDmg, enemyDef)})
+    checkOnFight(enemyStats, setEndOfFight)
+    
+    setTimeout(() => {
+        setUserStats({...userStats, hp: userStats.hp - dmg(enemyDmg, userDef)})
+        checkOnFight(userStats, setEndOfFight)
+    }, 200)
+}
+
+
+function random (min, max){
+    return  Math.floor(Math.random() * (max - min) ) + min;
+}
+
+function dmg (dmg, def){
+    return Math.round(((((2/5+2)*dmg*60/def)/50)+2)*random(217, 255)/255)
+}
+
+function RenderFight(props) {
+        
     const [usersPokemon, setUsersPokemon] = useState(false)
     const [enemyPokemon, setEnemyPokemon] = useState(false)
 
+    const [userStats, setUserStats] = useState(false)
+    const [enemyStats, setEnemyStats] = useState(false)
 
+    const [endOfFight, setEndOfFight] = useState(false);
+    
     const enemyPokeUrl = props.enemyPokeUrl;
     const usersPokeUrl = props.usersPokeUrl;
 
     useEffect(() => {
-        async function fetchUsersPoke(url) {
+        
+        async function fetchPoke(url, role) {
             const res = await fetch(url);
             const pokemon = await res.json();
-
-            setUsersPokemon(pokemon)
+            if (role === 'user'){
+                setUserStats(getStats(pokemon));
+                setUsersPokemon(pokemon)
+            } else {
+                setEnemyStats(getStats(pokemon));
+                setEnemyPokemon(pokemon)
+            }
         }
 
-        async function fetchEnemyPoke(url) {
-            const res = await fetch(url);
-            const pokemon = await res.json();
+        fetchPoke(enemyPokeUrl, 'enemy')
+        fetchPoke(usersPokeUrl, 'user')
 
-            setEnemyPokemon(pokemon)
-        }
-
-        fetchEnemyPoke(enemyPokeUrl)
-        fetchUsersPoke(usersPokeUrl)
-
-    }, [])
+    }, [enemyPokeUrl, usersPokeUrl])
 
     return (
         <div>
-            {usersPokemon ? <img alt="nem je" src={usersPokemon.sprites.other.showdown['back_shiny']}></img> : <p>not working</p>}
-            {enemyPokemon ? <img alt="nem je" src={enemyPokemon.sprites.other.showdown['front_shiny']}></img> : <p>not working</p>}
-
+            <div>
+                <p>HP: {userStats.hp}</p>
+                {usersPokemon ?
+                 <img alt="nem je" id="usersPokemon" src={usersPokemon.sprites.other.showdown['back_default']}></img> :
+                  <p>Loading...</p>}
+                  <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight) }>Attack</button>
+            </div>
+            {endOfFight ? <p>win</p> : <p></p>}
+            
+            
+        <div>
+            <p>HP: {enemyStats.hp}</p>
+            {enemyPokemon ?
+             <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
+              <p>Loading...</p>}
         </div>
-
+        </div>
     )
 }
 
-export default RenderPokemons;
-/*<img alt="nem je" src={enemyPokemon.sprites.other.showdown['front_shiny']}></img>*/
-/* {usersPokemon ? <img alt="nem je" src={usersPokemon.sprites.other.showdown['back_shiny']}></img> : <p>not working</p>} */
+export default RenderFight;
