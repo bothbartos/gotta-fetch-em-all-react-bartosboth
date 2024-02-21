@@ -70,6 +70,7 @@ function App() {
         <div>
           <h3>Fight!</h3>
           <RenderFight
+            returnToHome={returnToHome}
             usersPoke={selectedUserPokemon}
             enemyPoke={selectedEnemy}
             userPokemons={userPokemons}

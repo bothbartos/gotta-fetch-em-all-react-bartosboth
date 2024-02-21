@@ -96,12 +96,9 @@ function RenderFight(props) {
     console.log(endOfFight);
     if (endOfFight && winner === pokemons.user) {
       setAllPokemons( [...userPokemons,enemyPoke])
-      console.log(userPokemons);
     }else if(endOfFight && winner === pokemons.enemy){
       const fasz = removeLoser()
       setAllPokemons(fasz)
-        
-      console.log(userPokemons);
     }
   },[endOfFight])
 
