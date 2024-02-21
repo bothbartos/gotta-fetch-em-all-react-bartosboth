@@ -7,7 +7,6 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
 
   
   function App() {
-  const testPoke = 'https://pokeapi.co/api/v2/pokemon/ditto'
   const [locations, setLocations] = useState(null);
   const [shownData, setData] = useState(null);
   const [isAreasShown, setIsAreasShown] = useState(false);
@@ -49,6 +48,9 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
     return data;
   }
 
+  console.log(selectedEnemy);
+  console.log(selectedUserPokemon)
+
   function returnToHome() {
     setData(locations);
     setIsAreasShown(false);
@@ -76,7 +78,7 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
         <div>
 
           <h3>Fight!</h3>
-          <RenderFight usersPokeUrl = {testPoke} enemyPokeUrl = {testPoke}/>
+          <RenderFight usersPoke = {selectedUserPokemon} enemyPoke = {selectedEnemy}/>
 
         </div>
       ) : !areaSelected ? (
@@ -100,7 +102,7 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
           area={areas}
         ></SelectPokemon>
       ) : (
-        <SelectOwnPokemon userPokemons={userPokemons} setIsCombatOn={setIsCombatOn}></SelectOwnPokemon>
+        <SelectOwnPokemon userPokemons={userPokemons} setIsCombatOn={setIsCombatOn} setUserPokemon={setUserPokemon}></SelectOwnPokemon>
       )}
     </div>
   );

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import EnemyPokes from "./EnemyPokes";
-import SelectUserPokemon from "./SelectUserPokemon";
 
 function SelectPokemon({setEnemySelected, setEnemy, area}) {
   const [encounterPokemons, setEncounterPokemons] = useState([]);
