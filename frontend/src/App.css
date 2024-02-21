@@ -72,10 +72,10 @@ li {
   font-size: 1.5rem;
 }
 
-img{
+/* img{
   image-rendering: pixelated;
   width: 300px;
-}
+} */
 
 #navBar{
   height: 3rem;
