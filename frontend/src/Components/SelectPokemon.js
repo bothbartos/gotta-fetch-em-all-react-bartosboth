@@ -2,20 +2,16 @@ import { useEffect, useState } from "react";
 import EnemyPokes from "./EnemyPokes";
 import SelectUserPokemon from "./SelectUserPokemon";
 
-function SelectPokemon({ area }) {
+function SelectPokemon({setEnemySelected, setEnemy, area}) {
   const [encounterPokemons, setEncounterPokemons] = useState([]);
-  const [selectedEnemy, setEnemy] = useState([]);
-  const [choosenEnemy, isEnemyChoosen] = useState(false);
-
-  const areaData = area;
-
+  
   useEffect(() => {
-    async function fetchEncounters(url) {
-      const enemiesPromise = areaData.pokemon_encounters.map(
-        async (pokemon) => {
-          return await fetchEnemies(pokemon.pokemon.url);
-        }
-      );
+    async function fetchEncounters() {
+
+      const enemiesPromise = area.pokemon_encounters.map(async (pokemon) => {
+        const enemyData = await fetchEnemies(pokemon.pokemon.url);
+        return enemyData;
+      });
       const enemies = await Promise.all(enemiesPromise);
       setEncounterPokemons(enemies);
     }
@@ -26,7 +22,7 @@ function SelectPokemon({ area }) {
     const maxNum = encounterPokemons.length;
     const randomNumber = Math.floor(Math.random() * maxNum);
     setEnemy(encounterPokemons[randomNumber]);
-    isEnemyChoosen(true);
+    setEnemySelected(true);
   }
 
   async function fetchEnemies(url) {
@@ -35,26 +31,14 @@ function SelectPokemon({ area }) {
     return enemy;
   }
 
-  console.log(selectedEnemy);
   return (
-    <div key={area.location.name}>
+    <div>
       <ul>
-        {!choosenEnemy ? (
-          <>
-            {encounterPokemons.map((pokemon) => (
-              <EnemyPokes
-                setEnemy={setEnemy}
-                pokemon={pokemon}
-                key={pokemon.name}
-                isEnemyChoosen={isEnemyChoosen}
-              />
-            ))}
-            <button onClick={selectRandomEnemy}>Random Enemy</button>
-          </>
-        ) : (
-          <SelectUserPokemon />
-        )}
+        {encounterPokemons.map((pokemon) => (
+          <EnemyPokes key={pokemon.name} setEnemySelected={setEnemySelected} setEnemy={setEnemy} pokemon={pokemon} />
+        ))}
       </ul>
+      <button onClick={selectRandomEnemy}>Random Enemy</button>
     </div>
   );
 }
