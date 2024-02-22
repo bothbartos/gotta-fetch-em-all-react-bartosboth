@@ -18,6 +18,7 @@ function checkOnFight(hp, setEndOfFight, nameOfWinner, setWinner) {
   if (hp < 1) {
     setEndOfFight(true);
     setWinner(nameOfWinner);
+    return true
   }
 }
 
@@ -47,11 +48,13 @@ function handleContact(
     checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner);
 
     setTimeout(() => {
-      recentDmg = dmg(enemyDmg, userDef);
-      userHp -= recentDmg;
-      setUserStats({ ...userStats, hp: userStats.hp - recentDmg });
-      checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner);
-    }, 200);
+        if (!checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner)){
+          recentDmg = dmg(enemyDmg, userDef);
+          userHp -= recentDmg;
+          setUserStats({ ...userStats, hp: userStats.hp - recentDmg });
+          checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner);
+        }
+      }, 200);
   }
 }
 
@@ -73,7 +76,10 @@ function RenderFight(props) {
   const [enemyStats, setEnemyStats] = useState(false);
 
   const [endOfFight, setEndOfFight] = useState(false);
-  const [winner, setWinner] = useState(null);
+  const [battleClosing, setBattleClosing] = useState(false)
+  
+  const [winner, setWinner] = useState(null)
+
   const enemyPoke = props.enemyPoke;
   const usersPoke = props.usersPoke;
   const userPokemons = props.userPokemons;
@@ -122,66 +128,41 @@ function RenderFight(props) {
     return userPokemons;
   }
 
-  return (
-    <div id="battleField">
-      <div>
-        <h3>{pokemons.user}</h3>
-        <p>
-          HP: {userStats.hp}/{userStats.maxHp}
-        </p>
-        {usersPokemon ? (
-          <img
-            alt="nem je"
-            id="usersPokemon"
-            src={usersPokemon.sprites.other.showdown["back_default"]}
-          ></img>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
+  if (endOfFight){
+    setTimeout(() => {
+        setBattleClosing(true)
+    }, 3000);
+  }
 
-      <div>
-        {endOfFight ? (
-          <p>The winner: {winner}</p>
-        ) : (
-          <>
-            <button
-              onClick={() =>
-                handleContact(
-                  enemyStats,
-                  setEnemyStats,
-                  setUserStats,
-                  userStats,
-                  endOfFight,
-                  setEndOfFight,
-                  setWinner,
-                  pokemons,
-                )
-              }
-            >
-              Attack
-            </button>
-          </>
-        )}
-      </div>
+    return (
+        <div id="battleField">
+            {battleClosing ? <>{props.returnToHome()}</> : <>
+                
+            <div>
+                <h3>{pokemons.user}</h3>
+                <p>HP: {userStats.hp}/{userStats.maxHp}</p>
+                {usersPokemon ?
+                 <img alt="nem je" id="usersPokemon" src={usersPokemon.sprites.other.showdown['back_default']}></img> :
+                  <p>Loading...</p>}
+            </div>
 
-      <div>
-        <h3>{pokemons.enemy}</h3>
-        <p>
-          HP: {enemyStats.hp} / {enemyStats.maxHp}
-        </p>
-        {enemyPokemon ? (
-          <img
-            alt="nem je"
-            id="enemyPokemon"
-            src={enemyPokemon.sprites.other.showdown["front_default"]}
-          ></img>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    </div>
-  );
+            <div>
+                {endOfFight ? <p>The winner: {winner}</p> : <>
+                <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons) }>Attack</button>
+                    </>}
+            </div>
+            
+            <div>
+                <h3>{pokemons.enemy}</h3>
+                <p>HP: {enemyStats.hp} / {enemyStats.maxHp}</p>
+                {enemyPokemon ?
+                <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
+                <p>Loading...</p>}
+            </div>
+        </> 
+         }
+        </div>
+    )
 }
 
 export default RenderFight;
