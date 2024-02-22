@@ -2,21 +2,18 @@
 #battleField {
   display: flex;
   justify-content: space-evenly;
-  
-/*   margin: 10% 25% 10% 25%;
- */  
   margin-top: 7rem;
 }
 
 #usersPokemon{
   height: 90%;
-  filter: drop-shadow(gray 4px 4px);
+  filter: drop-shadow(gray 3px 3px);
   image-rendering: pixelated;
 }
 
 #enemyPokemon{
   height: 40%;
-  filter: drop-shadow(gray 4px 4px);
+  filter: drop-shadow(gray 3px 3px);
   image-rendering: pixelated;
 }
 
@@ -49,7 +46,7 @@ li {
 #selectPokes{
   image-rendering: pixelated;
   width: 300px;
-}
+} 
 
 #navBar{
   height: 3rem;
@@ -73,4 +70,17 @@ button{
   background-color: yellow;
   border-radius: 20px;
   font-size: large;
+}
+
+#attackBtn button{
+  padding-top: 15%;
+  background-image: url("./assets/attackBtnPng.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  border: none;
+  width: 200px;
+  height: 50px;
+  text-align:  ;
+  background-color: transparent;
 }

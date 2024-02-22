@@ -75,16 +75,17 @@ function App() {
         <button onClick={returnToHome}>Return Home</button>
       </nav>
       {isCombatOn ? (
-        <div id="fightPage">
-          <h3>Fight!</h3>
-          <RenderFight
-            returnToHome={returnToHome}
-            usersPoke={selectedUserPokemon}
-            enemyPoke={selectedEnemy}
-            userPokemons={userPokemons}
-            setAllPokemons={setAllPokemons}
-          />
-        </div>
+       <>
+       <h3>Fight!</h3>
+       <RenderFight
+         returnToHome={returnToHome}
+         usersPoke={selectedUserPokemon}
+         enemyPoke={selectedEnemy}
+         userPokemons={userPokemons}
+         setAllPokemons={setAllPokemons}
+       />
+       </>
+
       ) : !areaSelected ? (
         shownData && (
           <div id="locationSelector">
