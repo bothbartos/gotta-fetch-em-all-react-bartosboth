@@ -4,8 +4,7 @@ import RenderFight from "./Components/RenderFight";
 import ListElement from "./Components/ListElement";
 import SelectPokemon from "./Components/SelectPokemon";
 import SelectOwnPokemon from "./Components/SelectOwnPokemon";
-import { fightBackground } from "./assets";
-import { backgroundBase } from "./assets";
+import { fightBackground, backgroundBase } from "./assets";
 
 function App() {
   const [locations, setLocations] = useState(null);
@@ -69,15 +68,10 @@ function App() {
     setIsCombatOn(false);
   }
 
-  function logStuff(){
-    console.log(userPokemons);
-  }
-
   return (
     <div className="App">
       <nav id="navBar">
         <button onClick={returnToHome}>Return Home</button>
-        <button onClick={logStuff}>FAAASZ</button>
       </nav>
       {isCombatOn ? (
        <>
