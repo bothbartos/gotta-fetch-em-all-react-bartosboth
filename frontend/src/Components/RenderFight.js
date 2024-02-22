@@ -29,7 +29,7 @@ function handleContact(
   endOfFight,
   setEndOfFight,
   setWinner,
-  pokemons
+  pokemons,
 ) {
   const enemyDmg = enemyStats.attack;
   const userDmg = userStats.attack;
@@ -39,7 +39,7 @@ function handleContact(
   let enemyHp = enemyStats.hp;
 
   if (endOfFight) {
-    console.log("end");
+
   } else {
     let recentDmg = dmg(userDmg, enemyDef);
     enemyHp -= recentDmg;
@@ -81,6 +81,7 @@ function RenderFight(props) {
   const usersPoke = props.usersPoke;
   const userPokemons = props.userPokemons;
   const setAllPokemons = props.setAllPokemons;
+  const returnToHome = props.returnToHome;
 
   const pokemons = {
     user: usersPoke.name,
@@ -95,24 +96,30 @@ function RenderFight(props) {
     setEnemyPokemon(enemyPoke);
   }, [enemyPoke, usersPoke]);
 
-  useEffect(() =>{
-    console.log(endOfFight);
+  useEffect(() => {
     if (endOfFight && winner === pokemons.user) {
-      setAllPokemons( [...userPokemons,enemyPoke])
-    }else if(endOfFight && winner === pokemons.enemy){
-      const fasz = removeLoser()
-      setAllPokemons(fasz)
+      setAllPokemons([...userPokemons, enemyPoke]);
+      setTimeout(() => {
+        returnToHome()
+      }, 3000);
+    } else if (endOfFight && winner === pokemons.enemy) {
+      const removedPokemon = removeLoser();
+      setAllPokemons(removedPokemon);
+      setTimeout(() => {
+        returnToHome()
+      }, 3000);
     }
-  },[endOfFight])
+  }, [endOfFight]);
 
-  function removeLoser(){
-    const index = userPokemons.findIndex(pokemon => pokemon.name === pokemons.user);
+  function removeLoser() {
+    const index = userPokemons.findIndex(
+      (pokemon) => pokemon.name === pokemons.user
+    );
     if (index !== -1) {
       const updatedUserPokemons = [
         ...userPokemons.slice(0, index),
-        ...userPokemons.slice(index +  1)
+        ...userPokemons.slice(index + 1),
       ];
-      console.log(updatedUserPokemons);
       return updatedUserPokemons;
     }
     return userPokemons;
