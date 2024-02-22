@@ -4,6 +4,8 @@ import RenderFight from "./Components/RenderFight";
 import ListElement from "./Components/ListElement";
 import SelectPokemon from "./Components/SelectPokemon";
 import SelectOwnPokemon from "./Components/SelectOwnPokemon";
+import { fightBackground } from "./assets";
+import { backgroundBase } from "./assets";
 
 function App() {
   const [locations, setLocations] = useState(null);
@@ -44,7 +46,18 @@ function App() {
     const data = await response.json();
     return data;
   }
-  
+
+  function changeBackgroudImage(imageUrl) {
+
+    document.body.style["background-image"] = `url(${imageUrl})`
+  }
+
+  if(isCombatOn){
+    changeBackgroudImage(fightBackground)
+  }else{
+    changeBackgroudImage(backgroundBase)
+  }
+
 
   function returnToHome() {
     setData(locations);
@@ -56,43 +69,41 @@ function App() {
     setIsCombatOn(false);
   }
 
-  function logData(){
-    console.log(userPokemons);
-  }
-
   return (
     <div className="App">
       <nav id="navBar">
-        <button onClick={returnToHome}>Back</button>
-        <button onClick={logData}></button>
+        <button onClick={returnToHome}>Return Home</button>
       </nav>
       {isCombatOn ? (
-        <div>
-          <h3>Fight!</h3>
-          <RenderFight
-            returnToHome={returnToHome}
-            usersPoke={selectedUserPokemon}
-            enemyPoke={selectedEnemy}
-            userPokemons={userPokemons}
-            setAllPokemons={setAllPokemons}
-          />
-        </div>
+       <>
+       <h3>Fight!</h3>
+       <RenderFight
+         returnToHome={returnToHome}
+         usersPoke={selectedUserPokemon}
+         enemyPoke={selectedEnemy}
+         userPokemons={userPokemons}
+         setAllPokemons={setAllPokemons}
+       />
+       </>
+
       ) : !areaSelected ? (
         shownData && (
-          <ul>
-            {shownData.map((location) => (
-              <ListElement
-                text={location.name}
-                key={location.name}
-                url={location.url}
-                setData={setData}
-                isAreasShown={isAreasShown}
-                setIsAreasShown={setIsAreasShown}
-                setAreas={setAreas}
-                setAreaSelected={setAreaSelected}
-              ></ListElement>
-            ))}
-          </ul>
+          <div id="locationSelector">
+            <ul>
+              {shownData.map((location) => (
+                <ListElement
+                  text={location.name}
+                  key={location.name}
+                  url={location.url}
+                  setData={setData}
+                  isAreasShown={isAreasShown}
+                  setIsAreasShown={setIsAreasShown}
+                  setAreas={setAreas}
+                  setAreaSelected={setAreaSelected}
+                ></ListElement>
+              ))}
+            </ul>
+          </div>
         )
       ) : !enemySelected ? (
         <SelectPokemon

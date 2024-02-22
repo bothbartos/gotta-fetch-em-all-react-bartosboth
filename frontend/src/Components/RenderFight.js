@@ -33,7 +33,7 @@ function handleContact(
   endOfFight,
   setEndOfFight,
   setWinner,
-  pokemons,
+  pokemons
 ) {
   const enemyDmg = enemyStats.attack;
   const userDmg = userStats.attack;
@@ -78,9 +78,9 @@ function RenderFight(props) {
   const [enemyStats, setEnemyStats] = useState(false);
 
   const [endOfFight, setEndOfFight] = useState(false);
-  const [battleClosing, setBattleClosing] = useState(false)
-  
-  const [winner, setWinner] = useState(null)
+  const [battleClosing, setBattleClosing] = useState(false);
+
+  const [winner, setWinner] = useState(null);
 
   const enemyPoke = props.enemyPoke;
   const usersPoke = props.usersPoke;
@@ -111,8 +111,8 @@ function RenderFight(props) {
       const removedPokemon = removeLoser().name;
       setAllPokemons(removedPokemon);
       setTimeout(() => {
-        returnToHome()
-      }, 3000);
+        returnToHome();
+      }, 2000);
     }
   }, [endOfFight]);
 
@@ -130,9 +130,9 @@ function RenderFight(props) {
     return userPokemons;
   }
 
-  if (endOfFight){
+  if (endOfFight) {
     setTimeout(() => {
-        setBattleClosing(true)
+      setBattleClosing(true);
     }, 3000);
   }
 
@@ -152,37 +152,40 @@ function RenderFight(props) {
     }
   }
 
-    return (
-        <div id="battleField">
-            {battleClosing ? <>{props.returnToHome()}</> : <>
-                
-            <div>
-                <h3>{pokemons.user}</h3>
-                <p>HP: {userStats.hp}/{userStats.maxHp}</p>
-                <progress className={healthBarColoring(userStats.hp, userStats.maxHp)} value={userStats.hp} max={userStats.maxHp}></progress>
-                {usersPokemon ?
-                 <img alt="nem je" id="usersPokemon" src={usersPokemon.sprites.other.showdown['back_default']}></img> :
-                  <p>Loading...</p>}
-            </div>
-
-            <div>
-                {endOfFight ? <p>The winner is: {winner.role} {winner.name}</p> : <>
-                <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons) }>Attack</button>
-                    </>}
-            </div>
+  return (
+    <div id="fightPage">
+    <div id="battleField">
+        {battleClosing ? <>{props.returnToHome()}</> : <>
             
-            <div>
-                <h3>{pokemons.enemy}</h3>
-                <p>HP: {enemyStats.hp} / {enemyStats.maxHp}</p>
-                <progress className={healthBarColoring(enemyStats.hp, enemyStats.maxHp)} value={enemyStats.hp} max={enemyStats.maxHp}></progress>
-                {enemyPokemon ?
-                <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
-                <p>Loading...</p>}
-            </div>
-        </> 
-         }
+        <div>
+            <h3>{pokemons.user}</h3>
+            <p>HP: {userStats.hp}/{userStats.maxHp}</p>
+            <progress className={healthBarColoring(userStats.hp, userStats.maxHp)} value={userStats.hp} max={userStats.maxHp}></progress>
+            {usersPokemon ?
+             <img alt="nem je" id="usersPokemon" src={usersPokemon.sprites.other.showdown['back_default']}></img> :
+              <p>Loading...</p>}
         </div>
-    )
+
+        
+        <div>
+            <h3>{pokemons.enemy}</h3>
+            <p>HP: {enemyStats.hp} / {enemyStats.maxHp}</p>
+            <progress className={healthBarColoring(enemyStats.hp, enemyStats.maxHp)} value={enemyStats.hp} max={enemyStats.maxHp}></progress>
+            {enemyPokemon ?
+            <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
+            <p>Loading...</p>}
+        </div>
+    </> 
+     }
+    </div>
+        <div id="attackBtn">
+            {endOfFight ? <p>The winner: {winner}</p> : <>
+            <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons) }>Attack</button>
+                </>}
+        </div>
+
+    </div>
+)
 }
 
 export default RenderFight;
