@@ -155,8 +155,7 @@ function RenderFight(props) {
   return (
     <div id="fightPage">
     <div id="battleField">
-        {battleClosing ? <>{props.returnToHome()}</> : <>
-            
+        <>
         <div>
             <h3>{pokemons.user}</h3>
             <p>HP: {userStats.hp}/{userStats.maxHp}</p>
@@ -176,10 +175,10 @@ function RenderFight(props) {
             <p>Loading...</p>}
         </div>
     </> 
-     }
+     
     </div>
         <div id="attackBtn">
-            {endOfFight ? <p>The winner: {winner}</p> : <>
+            {endOfFight ? <p>The winner: {winner.role} {winner.name}</p> : <>
             <button onClick={() => handleContact(enemyStats, setEnemyStats, setUserStats, userStats, endOfFight, setEndOfFight, setWinner, pokemons) }>Attack</button>
                 </>}
         </div>
