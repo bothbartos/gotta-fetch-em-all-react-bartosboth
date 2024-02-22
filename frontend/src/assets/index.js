@@ -19,3 +19,6 @@ export const fuegoIronworks = require("./pokemon-locations/fuego-ironworks.jpg")
 export const eternaForest = require("./pokemon-locations/eterna-forest.jpg");
 export const eternaCity = require("./pokemon-locations/eterna-city.jpg");
 export const canalaveCity = require("./pokemon-locations/canalave-city.jpg");
+
+export const backgroundBase = require("./background_base.jpeg")
+export const fightBackground = require("./fightBackground.webp")

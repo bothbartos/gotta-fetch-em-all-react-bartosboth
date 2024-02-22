@@ -2,7 +2,7 @@ import DisplayPokemon from "./DisplayPokemon";
 
 function SelectOwnPokemon({ userPokemons, setIsCombatOn, setUserPokemon }) {
   return (
-    <div>
+    <div id="pokemonSelector">
       <ul>
         {userPokemons.map((pokemon) => {
           return (
