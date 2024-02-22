@@ -18,6 +18,7 @@ function checkOnFight(hp, setEndOfFight, nameOfWinner, setWinner) {
   if (hp < 1) {
     setEndOfFight(true);
     setWinner(nameOfWinner);
+    return true
   }
 }
 
@@ -47,11 +48,13 @@ function handleContact(
     checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner);
 
     setTimeout(() => {
-      recentDmg = dmg(enemyDmg, userDef);
-      userHp -= recentDmg;
-      setUserStats({ ...userStats, hp: userStats.hp - recentDmg });
-      checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner);
-    }, 200);
+        if (!checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner)){
+          recentDmg = dmg(enemyDmg, userDef);
+          userHp -= recentDmg;
+          setUserStats({ ...userStats, hp: userStats.hp - recentDmg });
+          checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner);
+        }
+      }, 200);
   }
 }
 
