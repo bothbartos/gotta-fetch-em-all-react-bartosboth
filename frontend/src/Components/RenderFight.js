@@ -98,13 +98,13 @@ function RenderFight(props) {
       setAllPokemons([...userPokemons, enemyPoke]);
       setTimeout(() => {
         returnToHome()
-      }, 3000);
+      }, 2000);
     } else if (endOfFight && winner === pokemons.enemy) {
       const removedPokemon = removeLoser();
       setAllPokemons(removedPokemon);
       setTimeout(() => {
         returnToHome()
-      }, 3000);
+      }, 2000);
     }
   }, [endOfFight]);
 
@@ -124,7 +124,7 @@ function RenderFight(props) {
 
   return (
     <div id="battleField">
-      <div>
+      <div >
         <h3>{pokemons.user}</h3>
         <p>
           HP: {userStats.hp}/{userStats.maxHp}

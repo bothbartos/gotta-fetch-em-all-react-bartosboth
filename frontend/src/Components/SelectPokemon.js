@@ -31,13 +31,13 @@ function SelectPokemon({setEnemySelected, setEnemy, area}) {
   }
 
   return (
-    <div>
+    <div id="pokemonSelector">
+      <button onClick={selectRandomEnemy}>Random Enemy</button>
       <ul>
         {encounterPokemons.map((pokemon) => (
           <EnemyPokes key={pokemon.name} setEnemySelected={setEnemySelected} setEnemy={setEnemy} pokemon={pokemon} />
         ))}
       </ul>
-      <button onClick={selectRandomEnemy}>Random Enemy</button>
     </div>
   );
 }
