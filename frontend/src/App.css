@@ -46,7 +46,62 @@ li {
 #selectPokes{
   image-rendering: pixelated;
   width: 300px;
-} 
+}
+
+
+.healthBar0{
+  height: 20px;
+  width: 5cm;
+  border-radius: 10px;
+}
+.healthBar1{
+  height: 20px;
+  width: 5cm;
+  border-radius: 10px;
+}
+.healthBar2{
+  height: 20px;
+  width: 5cm;
+  border-radius: 10px;
+}
+.healthBar3{
+  height: 20px;
+  width: 5cm;
+  border-radius: 10px;
+}
+
+.healthBar0::-webkit-progress-value {
+  background: red;
+  border-radius: 10px;
+}
+.healthBar0::-webkit-progress-bar {
+  border-radius: 10px;
+}
+
+.healthBar1::-webkit-progress-value {
+  background: orange;
+  border-radius: 10px;
+}
+.healthBar1::-webkit-progress-bar {
+  border-radius: 10px;
+}
+
+.healthBar2::-webkit-progress-value {
+  background: yellowgreen;
+  border-radius: 10px;
+}
+.healthBar2::-webkit-progress-bar {
+  border-radius: 10px;
+}
+
+.healthBar3::-webkit-progress-value {
+  background: green;
+  border-radius: 10px;
+}
+.healthBar3::-webkit-progress-bar {
+  border-radius: 10px;
+}
+
 
 #navBar{
   height: 3rem;
@@ -81,6 +136,6 @@ button{
   border: none;
   width: 200px;
   height: 50px;
-  text-align:  ;
+  /*text-align:  ;*/
   background-color: transparent;
 }

@@ -14,11 +14,14 @@ function getStats(pokemon) {
   return newStats;
 }
 
-function checkOnFight(hp, setEndOfFight, nameOfWinner, setWinner) {
+function checkOnFight(hp, setEndOfFight, nameOfWinner, setWinner, role) {
   if (hp < 1) {
     setEndOfFight(true);
-    setWinner(nameOfWinner);
-    return true;
+    setWinner({
+      name: nameOfWinner,
+      role: role
+    });
+    return true
   }
 }
 
@@ -39,21 +42,21 @@ function handleContact(
   let userHp = userStats.hp;
   let enemyHp = enemyStats.hp;
 
-  if (endOfFight) {
-  } else {
+  if (!endOfFight) {
     let recentDmg = dmg(userDmg, enemyDef);
     enemyHp -= recentDmg;
     setEnemyStats({ ...enemyStats, hp: enemyStats.hp - recentDmg });
-    checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner);
+    checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner, 'Your');
+    const isBattleEndedMiddleFight = checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner, 'Your');
 
     setTimeout(() => {
-      if (!checkOnFight(enemyHp, setEndOfFight, pokemons.user, setWinner)) {
-        recentDmg = dmg(enemyDmg, userDef);
-        userHp -= recentDmg;
-        setUserStats({ ...userStats, hp: userStats.hp - recentDmg });
-        checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner);
-      }
-    }, 200);
+        if (!isBattleEndedMiddleFight){
+          recentDmg = dmg(enemyDmg, userDef);
+          userHp -= recentDmg;
+          setUserStats({ ...userStats, hp: userStats.hp - recentDmg });
+          checkOnFight(userHp, setEndOfFight, pokemons.enemy, setWinner, "Enemy");
+        }
+      }, 200);
   }
 }
 
@@ -99,13 +102,13 @@ function RenderFight(props) {
   }, [enemyPoke, usersPoke]);
 
   useEffect(() => {
-    if (endOfFight && winner === pokemons.user) {
+    if (endOfFight && winner.name === pokemons.user) {
       setAllPokemons([...userPokemons, enemyPoke]);
       setTimeout(() => {
-        returnToHome();
-      }, 2000);
-    } else if (endOfFight && winner === pokemons.enemy) {
-      const removedPokemon = removeLoser();
+        returnToHome()
+      }, 3000);
+    } else if (endOfFight && winner.name === pokemons.enemy) {
+      const removedPokemon = removeLoser().name;
       setAllPokemons(removedPokemon);
       setTimeout(() => {
         returnToHome();
@@ -133,6 +136,22 @@ function RenderFight(props) {
     }, 3000);
   }
 
+  function healthBarColoring(hp, maxHp){
+    const percent = Math.floor(hp/maxHp*100)
+    if (percent >= 80) {
+      return 'healthBar3'
+    } 
+    else if (percent >= 60) {
+      return 'healthBar2'
+    }
+    else if (percent >= 30) {
+      return 'healthBar1'
+    }
+    else {
+      return 'healthBar0'
+    }
+  }
+
   return (
     <div id="fightPage">
     <div id="battleField">
@@ -141,6 +160,7 @@ function RenderFight(props) {
         <div>
             <h3>{pokemons.user}</h3>
             <p>HP: {userStats.hp}/{userStats.maxHp}</p>
+            <progress className={healthBarColoring(userStats.hp, userStats.maxHp)} value={userStats.hp} max={userStats.maxHp}></progress>
             {usersPokemon ?
              <img alt="nem je" id="usersPokemon" src={usersPokemon.sprites.other.showdown['back_default']}></img> :
               <p>Loading...</p>}
@@ -150,6 +170,7 @@ function RenderFight(props) {
         <div>
             <h3>{pokemons.enemy}</h3>
             <p>HP: {enemyStats.hp} / {enemyStats.maxHp}</p>
+            <progress className={healthBarColoring(enemyStats.hp, enemyStats.maxHp)} value={enemyStats.hp} max={enemyStats.maxHp}></progress>
             {enemyPokemon ?
             <img alt="nem je" id="enemyPokemon" src={enemyPokemon.sprites.other.showdown['front_default']}></img> :
             <p>Loading...</p>}
