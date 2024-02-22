@@ -114,15 +114,15 @@ function RenderFight(props) {
         returnToHome();
       }, 3000);
     } else if (endOfFight && winner.name === pokemons.enemy) {
-      const removedPokemon = removeLoser();
+      const removedPokemon = sliceLoserPokemon();
       setAllPokemons(removedPokemon);
       setTimeout(() => {
         returnToHome();
-      }, 30000);
+      }, 4000);
     }
   }, [endOfFight]);
 
-  function removeLoser() {
+  function sliceLoserPokemon() {
     const index = userPokemons.findIndex(
       (pokemon) => pokemon.name === pokemons.user
     );

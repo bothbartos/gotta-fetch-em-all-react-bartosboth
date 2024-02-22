@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 
 function EnemyPokes(props){
   const name = props.pokemon.name;
