@@ -41,6 +41,7 @@ li {
   text-align: center;
   list-style-type: none;
   font-size: 1.5rem;
+  cursor: pointer;
 }
 
 #selectPokes{
@@ -107,7 +108,7 @@ li {
   height: 3rem;
 }
 
-#locationSelector, #onePoke{
+#locationSelector{
   border: rgb(0, 0, 0) solid 3px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.306);
@@ -116,6 +117,19 @@ li {
   margin-left: 4rem;
   margin-right: 4rem;
   margin-bottom: 2rem;
+  
+}
+
+#onePoke{
+  border: rgb(0, 0, 0) solid 3px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.306);
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
 }
 
 
@@ -125,6 +139,12 @@ button{
   background-color: yellow;
   border-radius: 20px;
   font-size: large;
+  cursor: pointer;
+}
+
+#attackBtn{
+  margin-top: 2.3rem;
+  height: 10px;
 }
 
 #attackBtn button{
@@ -134,8 +154,12 @@ button{
   background-repeat: no-repeat;
   background-position-x: center;
   border: none;
-  width: 200px;
-  height: 50px;
-  /*text-align:  ;*/
+  width: 180px;
+  height: 10px;
   background-color: transparent;
+
+}
+
+#pokemonDead{
+  height: 250px;
 }

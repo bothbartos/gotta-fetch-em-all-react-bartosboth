@@ -69,10 +69,15 @@ function App() {
     setIsCombatOn(false);
   }
 
+  function logStuff(){
+    console.log(userPokemons);
+  }
+
   return (
     <div className="App">
       <nav id="navBar">
         <button onClick={returnToHome}>Return Home</button>
+        <button onClick={logStuff}>FAAASZ</button>
       </nav>
       {isCombatOn ? (
        <>
