@@ -10,7 +10,7 @@ function DisplayPokemon(props) {
 
   return (
     <div onClick={onClick}>
-      <img src={pokemon.sprites.front_default} alt="pokimon"></img>
+      <img src={pokemon.sprites.front_default} alt="pokimon" id="selectPokes"></img>
       <li>{pokemon.name}</li>
     </div>
   );
