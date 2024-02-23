@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import EnemyPokes from "./EnemyPokes";
 
-function SelectPokemon({setEnemySelected, setEnemy, area}) {
+function SelectPokemon({ setEnemySelected, setEnemy, area }) {
   const [encounterPokemons, setEncounterPokemons] = useState([]);
-  
+
   useEffect(() => {
     async function fetchEncounters() {
-
       const enemiesPromise = area.pokemon_encounters.map(async (pokemon) => {
         const enemyData = await fetchEnemies(pokemon.pokemon.url);
         return enemyData;
@@ -35,7 +34,12 @@ function SelectPokemon({setEnemySelected, setEnemy, area}) {
       <button onClick={selectRandomEnemy}>Random Enemy</button>
       <ul>
         {encounterPokemons.map((pokemon) => (
-          <EnemyPokes key={pokemon.name} setEnemySelected={setEnemySelected} setEnemy={setEnemy} pokemon={pokemon} />
+          <EnemyPokes
+            key={pokemon.name}
+            setEnemySelected={setEnemySelected}
+            setEnemy={setEnemy}
+            pokemon={pokemon}
+          />
         ))}
       </ul>
     </div>

@@ -18,6 +18,16 @@ function App() {
   const [enemySelected, setEnemySelected] = useState(false);
   const [isCombatOn, setIsCombatOn] = useState(false);
 
+  const screenTitle = areaSelected
+    ? enemySelected
+      ? isCombatOn
+        ? ""
+        : "Choose Pokemon"
+      : "Choose Enemy Pokemon"
+    : isAreasShown
+    ? "Choose Area"
+    : "Choose Location";
+
   const ownStarterPokes = ["bulbasaur", "charizard", "129"];
 
   useEffect(() => {
@@ -47,16 +57,14 @@ function App() {
   }
 
   function changeBackgroudImage(imageUrl) {
-
-    document.body.style["background-image"] = `url(${imageUrl})`
+    document.body.style["background-image"] = `url(${imageUrl})`;
   }
 
-  if(isCombatOn){
-    changeBackgroudImage(fightBackground)
-  }else{
-    changeBackgroudImage(backgroundBase)
+  if (isCombatOn) {
+    changeBackgroudImage(fightBackground);
+  } else {
+    changeBackgroudImage(backgroundBase);
   }
-
 
   function returnToHome() {
     setData(locations);
@@ -73,18 +81,18 @@ function App() {
       <nav id="navBar">
         <button onClick={returnToHome}>Return Home</button>
       </nav>
+      <h1>{screenTitle}</h1>
       {isCombatOn ? (
-       <>
-       <h3>Fight!</h3>
-       <RenderFight
-         returnToHome={returnToHome}
-         usersPoke={selectedUserPokemon}
-         enemyPoke={selectedEnemy}
-         userPokemons={userPokemons}
-         setAllPokemons={setAllPokemons}
-       />
-       </>
-
+        <>
+          <h3>Fight!</h3>
+          <RenderFight
+            returnToHome={returnToHome}
+            usersPoke={selectedUserPokemon}
+            enemyPoke={selectedEnemy}
+            userPokemons={userPokemons}
+            setAllPokemons={setAllPokemons}
+          />
+        </>
       ) : !areaSelected ? (
         shownData && (
           <div id="locationSelector">
