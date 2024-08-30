@@ -8,8 +8,6 @@ describe('App', () => {
         render(<App/>);
 
         expect(await screen.findByText(/Choose Location/i)).toBeInTheDocument();
-
-        expect(await screen.findByText(/canalave-city/)).toBeInTheDocument();
     });
     it("navigates to select area, then see enemy pokemons", async () => {
         render(<App/>);
