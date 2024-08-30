@@ -7,6 +7,7 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
 import fetchData from "./Utils"
 import {backgroundBase, fightBackground} from "./assets";
 
+
 function App() {
   const [locations, setLocations] = useState(null);
   const [shownData, setData] = useState(null);
@@ -32,22 +33,10 @@ function App() {
   const ownStarterPokes = ["bulbasaur", "charizard", "129"];
 
   useEffect(() => {
-    async function fetchLocations() {
-      const data = await fetchData("https://pokeapi.co/api/v2/location");
-      setData(data.results);
-      setLocations(data.results);
-    }
     fetchLocations();
-    async function fetchPlayerPokemons() {
-      const playerPokemonsPromises = ownStarterPokes.map(async (url) => {
-        return await fetchData(
-            `https://pokeapi.co/api/v2/pokemon/${url}`
-        );
-      });
-      const playerPokemons = await Promise.all(playerPokemonsPromises);
-      setAllPokemons(playerPokemons);
-    }
+
     fetchPlayerPokemons();
+
   },[]);
 
   function changeBackgroundImage(imageUrl) {
@@ -68,6 +57,22 @@ function App() {
     setEnemySelected(false);
     setEnemy([]);
     setIsCombatOn(false);
+  }
+
+  async function fetchPlayerPokemons() {
+    const playerPokemonsPromises = ownStarterPokes.map(async (url) => {
+      return await fetchData(
+          `https://pokeapi.co/api/v2/pokemon/${url}`
+      );
+    });
+    const playerPokemons = await Promise.all(playerPokemonsPromises);
+    setAllPokemons(playerPokemons);
+  }
+
+  async function fetchLocations() {
+    const data = await fetchData("https://pokeapi.co/api/v2/location");
+    setData(data.results);
+    setLocations(data.results);
   }
 
   return (

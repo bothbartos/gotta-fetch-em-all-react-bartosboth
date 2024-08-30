@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# Gotta Fetch() 'Em All
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to **Gotta Fetch() 'Em All**! This is a fun and interactive web application built with React and Node.js, leveraging the PokeAPI to bring the excitement of Pokémon battles right to your browser. In this app, you can battle Pokémon from different areas, collect new ones, and manage your team based on your victories and defeats.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+**Gotta Fetch() 'Em All** is a single-page application that allows users to:
+- Select areas to encounter and battle Pokémon.
+- Capture defeated Pokémon if you win the battle.
+- Lose your current Pokémon if you lose the battle.
 
-### `npm start`
+The app is designed with a frontend in React.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Area Selection**: Choose different areas to battle Pokémon with varying difficulty.
+![Area selector](public/readme_screenshots/mainpage_screenshot.png)
+- **Battling Mechanics**: Engage in battles and test your Pokémon's skills against random opponents.
+![Battle](public/readme_screenshots/fight_screenshot.png)
+- **Capture System**: Win battles to add defeated Pokémon to your collection.
+- **Loss Consequence**: Lose battles to potentially lose your current Pokémon.
+- **Pokédex Integration**: View Pokémon details and stats using the PokeAPI.
+![Pokédex](public/readme_screenshots/enemy_selector_screenshot.png)
 
-### `npm test`
+## Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Frontend**: React
+- **API**: PokeAPI (to fetch Pokémon data and battle mechanics)
+- **State Management**: React hooks and context
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (which includes npm)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Getting Started
 
-### `npm run eject`
+1. **Clone the Repository**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```bash
+   git clone https://github.com/yourusername/gotta-fetch-them-all.git
+   cd gotta-fetch-them-all
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Install Dependencies**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   Navigate to both the `frontend` and `backend` directories and run:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. **Start the Application**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+     cd frontend
+     npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   The React app should now be running on `http://localhost:3000` (or another port if specified), and the Node.js server will handle any server-side logic.
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. **Select an Area**: Use the area selection menu to choose a location for your Pokémon battle.
 
-### Analyzing the Bundle Size
+2. **Battle**: Engage in battles against Pokémon from the chosen area. The outcome depends on your Pokémon's stats and battle strategy.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. **Capture or Lose**: Depending on the battle result:
+    - **Win**: Add the defeated Pokémon to your collection.
+    - **Lose**: Your current Pokémon is lost.
 
-### Making a Progressive Web App
+4. **View Your Collection**: Check your Pokémon collection to see the Pokémon you have captured.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Contributors and contact
 
-### Advanced Configuration
+For any questions or feedback, please reach out to the project maintainer:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- [Tavirutyutyu](https://github.com/Tavirutyutyu)
+- [Geonauta11](https://github.com/Geonauta11)
+- [bothbartos](https://github.com/bothbartos)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Enjoy battling and collecting Pokémon in **Gotta Fetch() 'Em All**!
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

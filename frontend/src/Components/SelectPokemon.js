@@ -6,15 +6,16 @@ function SelectPokemon({ setEnemySelected, setEnemy, area }) {
   const [encounterPokemons, setEncounterPokemons] = useState([]);
 
   useEffect(() => {
-    async function fetchEncounters() {
-      const enemiesPromise = area.pokemon_encounters.map(async (pokemon) => {
-        return await fetchData(pokemon.pokemon.url);
-      });
-      const enemies = await Promise.all(enemiesPromise);
-      setEncounterPokemons(enemies);
-    }
     fetchEncounters();
   }, []);
+
+  async function fetchEncounters() {
+    const enemiesPromise = area.pokemon_encounters.map(async (pokemon) => {
+      return await fetchData(pokemon.pokemon.url);
+    });
+    const enemies = await Promise.all(enemiesPromise);
+    setEncounterPokemons(enemies);
+  }
 
   function selectRandomEnemy() {
     const maxNum = encounterPokemons.length;

@@ -1,3 +1,5 @@
+import fetchData from "../Utils";
+
 function ListElement(props) {
   const text = props.text;
   const url = props.url;
@@ -8,8 +10,7 @@ function ListElement(props) {
   const setAreaSelected = props.setAreaSelected;
 
   async function getAreas(url) {
-    const response = await fetch(url);
-    const areas = await response.json();
+    const areas = await fetchData(url);
     if (!isAreasShown) {
       setData(areas.areas);
       setIsAreasShown(true);
