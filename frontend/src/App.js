@@ -1,10 +1,11 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import {useEffect, useState} from "react";
 import RenderFight from "./Components/RenderFight";
 import ListElement from "./Components/ListElement";
 import SelectPokemon from "./Components/SelectPokemon";
 import SelectOwnPokemon from "./Components/SelectOwnPokemon";
-import { fightBackground, backgroundBase } from "./assets";
+import fetchData from "./Utils"
+import {backgroundBase, fightBackground} from "./assets";
 
 function App() {
   const [locations, setLocations] = useState(null);
@@ -39,31 +40,24 @@ function App() {
     fetchLocations();
     async function fetchPlayerPokemons() {
       const playerPokemonsPromises = ownStarterPokes.map(async (url) => {
-        const pokemon = await fetchData(
-          `https://pokeapi.co/api/v2/pokemon/${url}`
+        return await fetchData(
+            `https://pokeapi.co/api/v2/pokemon/${url}`
         );
-        return pokemon;
       });
       const playerPokemons = await Promise.all(playerPokemonsPromises);
       setAllPokemons(playerPokemons);
     }
     fetchPlayerPokemons();
-  }, []);
+  },[]);
 
-  async function fetchData(url) {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  }
-
-  function changeBackgroudImage(imageUrl) {
+  function changeBackgroundImage(imageUrl) {
     document.body.style["background-image"] = `url(${imageUrl})`;
   }
 
   if (isCombatOn) {
-    changeBackgroudImage(fightBackground);
+    changeBackgroundImage(fightBackground);
   } else {
-    changeBackgroudImage(backgroundBase);
+    changeBackgroundImage(backgroundBase);
   }
 
   function returnToHome() {

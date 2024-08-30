@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { pokeBall, pokemonDead } from "../assets";
+import React, {useEffect, useState} from "react";
+import {pokeBall, pokemonDead} from "../assets";
 
 function getStats(pokemon) {
   const newStats = {};
 
-  pokemon.stats.forEach((element) => {
-    const nameOfStat = element.stat.name;
-    const valueOfStat = element["base_stat"];
-
-    newStats[nameOfStat] = valueOfStat;
+  pokemon.stats.forEach((stat) => {
+    const nameOfStat = stat.stat.name;
+    newStats[nameOfStat] = stat["base_stat"];
   });
   newStats.maxHp = newStats.hp;
 
@@ -127,11 +125,10 @@ function RenderFight(props) {
       (pokemon) => pokemon.name === pokemons.user
     );
     if (index !== -1) {
-      const updatedUserPokemons = [
+      return [
         ...userPokemons.slice(0, index),
         ...userPokemons.slice(index + 1),
       ];
-      return updatedUserPokemons;
     }
     return userPokemons;
   }
