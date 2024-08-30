@@ -72,9 +72,11 @@ function App() {
 
   return (
     <div className="App">
-      <nav id="navBar">
-        <button onClick={returnToHome}>Return Home</button>
-      </nav>
+      {!isCombatOn ? (
+        <nav id="navBar">
+          <button onClick={returnToHome}>Return Home</button>
+        </nav>
+      ) : <></>}
       <h1>{screenTitle}</h1>
       {isCombatOn ? (
         <>
