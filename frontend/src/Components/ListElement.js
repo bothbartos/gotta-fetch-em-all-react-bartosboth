@@ -1,23 +1,19 @@
 import fetchData from "../Utils";
 
-function ListElement(props) {
-  const text = props.text;
-  const url = props.url;
-  const setData = props.setData;
-  const isAreasShown = props.isAreasShown;
-  const setIsAreasShown = props.setIsAreasShown;
-  const setAreas = props.setAreas;
-  const setAreaSelected = props.setAreaSelected;
+function ListElement({text, url, isAreasShown, onAreaSelect, onLocationSelect}) {
+
 
   async function getAreas(url) {
     const areas = await fetchData(url);
     if (!isAreasShown) {
-      setData(areas.areas);
+      onAreaSelect(areas.areas);
+      /*setData(areas.areas);
       setIsAreasShown(true);
-      setAreas(areas.areas);
+      setAreas(areas.areas);*/
     } else {
-      setAreas(areas)
-      setAreaSelected(true);
+      onLocationSelect(areas);
+      /*setAreas(areas)
+      setAreaSelected(true);*/
     }
   }
 

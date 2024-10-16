@@ -89,7 +89,7 @@ function RenderFight(props) {
   const enemyPoke = props.enemyPoke;
   const usersPoke = props.usersPoke;
   const userPokemons = props.userPokemons;
-  const setAllPokemons = props.setAllPokemons;
+  const onEndOfFight = props.onEndOfFight;
   const returnToHome = props.returnToHome;
 
   const pokemons = {
@@ -107,13 +107,13 @@ function RenderFight(props) {
 
   useEffect(() => {
     if (endOfFight && winner.name === pokemons.user) {
-      setAllPokemons([...userPokemons, enemyPoke]);
+      onEndOfFight([...userPokemons, enemyPoke]);
       setTimeout(() => {
         returnToHome();
       }, 3000);
     } else if (endOfFight && winner.name === pokemons.enemy) {
       const removedPokemon = sliceLoserPokemon();
-      setAllPokemons(removedPokemon);
+      onEndOfFight(removedPokemon);
       setTimeout(() => {
         returnToHome();
       }, 4000);

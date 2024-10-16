@@ -7,6 +7,20 @@ import SelectOwnPokemon from "./Components/SelectOwnPokemon";
 import fetchData from "./Utils"
 import {backgroundBase, fightBackground} from "./assets";
 
+async function fetchPlayerPokemons() {
+  const ownStarterPokes = ["bulbasaur", "charizard", "129"];
+  const playerPokemonsPromises = ownStarterPokes.map(async (url) => {
+    return await fetchData(
+        `https://pokeapi.co/api/v2/pokemon/${url}`
+    );
+  });
+  return await Promise.all(playerPokemonsPromises);
+}
+
+async function fetchLocations() {
+  return await fetchData("https://pokeapi.co/api/v2/location");
+}
+
 
 function App() {
   const [locations, setLocations] = useState(null);
@@ -30,12 +44,16 @@ function App() {
     ? "Choose Area"
     : "Choose Location";
 
-  const ownStarterPokes = ["bulbasaur", "charizard", "129"];
 
-  useEffect(() => {
-    fetchLocations();
-
-    fetchPlayerPokemons();
+  useEffect( () => {
+    async function fetchData() {
+      const locations = await fetchLocations();
+      const playerPokemons = await fetchPlayerPokemons();
+      setAllPokemons(playerPokemons);
+      setLocations(locations.results);
+      setData(locations.results);
+    }
+    fetchData();
 
   },[]);
 
@@ -59,20 +77,25 @@ function App() {
     setIsCombatOn(false);
   }
 
-  async function fetchPlayerPokemons() {
-    const playerPokemonsPromises = ownStarterPokes.map(async (url) => {
-      return await fetchData(
-          `https://pokeapi.co/api/v2/pokemon/${url}`
-      );
-    });
-    const playerPokemons = await Promise.all(playerPokemonsPromises);
-    setAllPokemons(playerPokemons);
+  function onEndOfFight(pokemons) {
+    setAllPokemons(pokemons);
   }
 
-  async function fetchLocations() {
-    const data = await fetchData("https://pokeapi.co/api/v2/location");
-    setData(data.results);
-    setLocations(data.results);
+  function onAreaSelect(areas){
+    setData(areas);
+    setIsAreasShown(true);
+    setAreas(areas);
+    setAreaSelected(false);
+  }
+
+  function onLocationSelect(location) {
+   setAreas(location);
+   setAreaSelected(true);
+  }
+
+  function onUserPokemonSelect(pokemon){
+    setIsCombatOn(true);
+    setUserPokemon(pokemon);
   }
 
   return (
@@ -91,7 +114,7 @@ function App() {
             usersPoke={selectedUserPokemon}
             enemyPoke={selectedEnemy}
             userPokemons={userPokemons}
-            setAllPokemons={setAllPokemons}
+            onEndOfFight={onEndOfFight}
           />
         </>
       ) : !areaSelected ? (
@@ -103,11 +126,9 @@ function App() {
                   text={location.name}
                   key={location.name}
                   url={location.url}
-                  setData={setData}
                   isAreasShown={isAreasShown}
-                  setIsAreasShown={setIsAreasShown}
-                  setAreas={setAreas}
-                  setAreaSelected={setAreaSelected}
+                  onAreaSelect={onAreaSelect}
+                  onLocationSelect={onLocationSelect}
                 ></ListElement>
               ))}
             </ul>
@@ -120,11 +141,10 @@ function App() {
           area={areas}
         ></SelectPokemon>
       ) : (
-        <SelectOwnPokemon
-          userPokemons={userPokemons}
-          setIsCombatOn={setIsCombatOn}
-          setUserPokemon={setUserPokemon}
-        ></SelectOwnPokemon>
+          <SelectOwnPokemon
+              userPokemons={userPokemons}
+              onUserPokemonSelect={onUserPokemonSelect}
+          ></SelectOwnPokemon>
       )}
     </div>
   );
