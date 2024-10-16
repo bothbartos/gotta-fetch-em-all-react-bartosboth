@@ -98,6 +98,11 @@ function App() {
     setUserPokemon(pokemon);
   }
 
+  function onEnemySelect(pokemon){
+    setEnemy(pokemon);
+    setEnemySelected(true);
+  }
+
   return (
     <div className="App">
       {!isCombatOn ? (
@@ -136,8 +141,7 @@ function App() {
         )
       ) : !enemySelected ? (
         <SelectPokemon
-          setEnemySelected={setEnemySelected}
-          setEnemy={setEnemy}
+          onEnemySelect={onEnemySelect}
           area={areas}
         ></SelectPokemon>
       ) : (

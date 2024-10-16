@@ -75,7 +75,7 @@ function dmg(dmg, def) {
   );
 }
 
-function RenderFight(props) {
+function RenderFight({enemyPoke, usersPoke, userPokemons, onEndOfFight, returnToHome}) {
   const [usersPokemon, setUsersPokemon] = useState(false);
   const [enemyPokemon, setEnemyPokemon] = useState(false);
 
@@ -85,12 +85,6 @@ function RenderFight(props) {
   const [endOfFight, setEndOfFight] = useState(false);
 
   const [winner, setWinner] = useState(null);
-
-  const enemyPoke = props.enemyPoke;
-  const usersPoke = props.usersPoke;
-  const userPokemons = props.userPokemons;
-  const onEndOfFight = props.onEndOfFight;
-  const returnToHome = props.returnToHome;
 
   const pokemons = {
     user: usersPoke.name,

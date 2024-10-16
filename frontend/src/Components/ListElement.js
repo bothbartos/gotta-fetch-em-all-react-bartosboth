@@ -7,13 +7,8 @@ function ListElement({text, url, isAreasShown, onAreaSelect, onLocationSelect}) 
     const areas = await fetchData(url);
     if (!isAreasShown) {
       onAreaSelect(areas.areas);
-      /*setData(areas.areas);
-      setIsAreasShown(true);
-      setAreas(areas.areas);*/
     } else {
       onLocationSelect(areas);
-      /*setAreas(areas)
-      setAreaSelected(true);*/
     }
   }
 
