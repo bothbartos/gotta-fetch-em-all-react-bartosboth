@@ -40,7 +40,10 @@ Ensure you have the following installed:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/gotta-fetch-them-all.git
+   git@github.com:bothbartos/gotta-fetch-em-all-react-bartosboth.git
+   ```
+   
+   ```bash
    cd gotta-fetch-them-all
    ```
 
