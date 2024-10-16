@@ -40,16 +40,14 @@ Ensure you have the following installed:
 1. **Clone the Repository**
 
    ```bash
-   git@github.com:bothbartos/gotta-fetch-em-all-react-bartosboth.git
+   git clone git@github.com:bothbartos/gotta-fetch-em-all-react-bartosboth.git
    ```
    
    ```bash
-   cd gotta-fetch-them-all
+   cd gotta-fetch-em-all-react-bartosboth/frontend
    ```
 
 2. **Install Dependencies**
-
-   Navigate to both the `frontend` and `backend` directories and run:
 
    ```bash
    npm install
@@ -58,7 +56,6 @@ Ensure you have the following installed:
 3. **Start the Application**
 
    ```bash
-     cd frontend
      npm start
    ```
 
