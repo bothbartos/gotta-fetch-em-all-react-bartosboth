@@ -1,6 +1,6 @@
 import "./App.css";
 import {useEffect, useState} from "react";
-import RenderFight from "./Components/RenderFight";
+import RenderFight from "./Components/FightPage/RenderFight";
 import ListElement from "./Components/ListElement";
 import SelectPokemon from "./Components/SelectPokemon";
 import SelectOwnPokemon from "./Components/SelectOwnPokemon";

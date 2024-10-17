@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {pokeBall, pokemonDead} from "../assets";
+import DisplayPokemonFight from "./DisplayPokemonFight";
+import {pokeBall, pokemonDead} from "../../assets";
+import BattleResult from "./BattleResult";
 
 function getStats(pokemon) {
   const newStats = {};
@@ -75,6 +77,32 @@ function dmg(dmg, def) {
   );
 }
 
+function sliceLoserPokemon(userPokemons, pokemons) {
+  const index = userPokemons.findIndex(
+      (pokemon) => pokemon.name === pokemons.user
+  );
+  if (index !== -1) {
+    return [
+      ...userPokemons.slice(0, index),
+      ...userPokemons.slice(index + 1),
+    ];
+  }
+  return userPokemons;
+}
+
+function healthBarColoring(hp, maxHp) {
+  const percent = Math.floor((hp / maxHp) * 100);
+  if (percent >= 80) {
+    return "healthBar3";
+  } else if (percent >= 60) {
+    return "healthBar2";
+  } else if (percent >= 30) {
+    return "healthBar1";
+  } else {
+    return "healthBar0";
+  }
+}
+
 function RenderFight({enemyPoke, usersPoke, userPokemons, onEndOfFight, returnToHome}) {
   const [usersPokemon, setUsersPokemon] = useState(false);
   const [enemyPokemon, setEnemyPokemon] = useState(false);
@@ -106,7 +134,7 @@ function RenderFight({enemyPoke, usersPoke, userPokemons, onEndOfFight, returnTo
         returnToHome();
       }, 3000);
     } else if (endOfFight && winner.name === pokemons.enemy) {
-      const removedPokemon = sliceLoserPokemon();
+      const removedPokemon = sliceLoserPokemon(userPokemons, pokemons);
       onEndOfFight(removedPokemon);
       setTimeout(() => {
         returnToHome();
@@ -114,109 +142,53 @@ function RenderFight({enemyPoke, usersPoke, userPokemons, onEndOfFight, returnTo
     }
   }, [endOfFight]);
 
-  function sliceLoserPokemon() {
-    const index = userPokemons.findIndex(
-      (pokemon) => pokemon.name === pokemons.user
-    );
-    if (index !== -1) {
-      return [
-        ...userPokemons.slice(0, index),
-        ...userPokemons.slice(index + 1),
-      ];
-    }
-    return userPokemons;
-  }
-
-  function healthBarColoring(hp, maxHp) {
-    const percent = Math.floor((hp / maxHp) * 100);
-    if (percent >= 80) {
-      return "healthBar3";
-    } else if (percent >= 60) {
-      return "healthBar2";
-    } else if (percent >= 30) {
-      return "healthBar1";
-    } else {
-      return "healthBar0";
-    }
-  }
-
   return (
-    <div id="fightPage">
-      <div id="battleField">
-        <div>
-          <h3>{pokemons.user}</h3>
-          <p>
-            HP: {userStats.hp}/{userStats.maxHp}
-          </p>
-          <progress
-            className={healthBarColoring(userStats.hp, userStats.maxHp)}
-            value={userStats.hp}
-            max={userStats.maxHp}
-          ></progress>
-          {usersPokemon ? (
-            <img
-              alt="nem je"
-              id="usersPokemon"
-              src={usersPokemon.sprites.other.showdown["back_default"]}
-            ></img>
-          ) : (
-            <p>Loading...</p>
-          )}
+      <div id="fightPage">
+        <div id="battleField">
+          <DisplayPokemonFight
+              name={pokemons.user}
+              stats={userStats}
+              pokemonData={usersPokemon}
+              isUser={true}
+              healthBarColoring={healthBarColoring}
+          />
+          <DisplayPokemonFight
+              name={pokemons.enemy}
+              stats={enemyStats}
+              pokemonData={enemyPokemon}
+              isUser={false}
+              healthBarColoring={healthBarColoring}
+          />
         </div>
-  
-        <div>
-          <h3>{pokemons.enemy}</h3>
-          <p>
-            HP: {enemyStats.hp} / {enemyStats.maxHp}
-          </p>
-          <progress
-            className={healthBarColoring(enemyStats.hp, enemyStats.maxHp)}
-            value={enemyStats.hp}
-            max={enemyStats.maxHp}
-          ></progress>
-          {enemyPokemon ? (
-            <img
-              alt="nem je"
-              id="enemyPokemon"
-              src={enemyPokemon.sprites.other.showdown["front_default"]}
-            ></img>
+        <div id="attackBtn">
+          {endOfFight ? (
+              <BattleResult
+                  winner={winner}
+                  pokeBall={pokeBall}
+                  pokemonDead={pokemonDead}
+              />
           ) : (
-            <p>Loading...</p>
+              <button
+                  onClick={() =>
+                      handleContact(
+                          enemyStats,
+                          setEnemyStats,
+                          setUserStats,
+                          userStats,
+                          endOfFight,
+                          setEndOfFight,
+                          setWinner,
+                          pokemons
+                      )
+                  }
+              >
+                Attack
+              </button>
           )}
         </div>
       </div>
-      <div id="attackBtn">
-        {endOfFight ? (
-          <>
-            <p>
-              The winner: {winner.role} {winner.name}
-            </p>
-            {winner.role === "Your" ? (
-              <img src={pokeBall} alt="pokeball" id="pokeball"></img>
-            ) : (
-              <img src={pokemonDead} alt="ded" id="pokemonDead"></img>
-            )}
-          </>
-        ) : (
-          <button
-            onClick={() =>
-              handleContact(
-                enemyStats,
-                setEnemyStats,
-                setUserStats,
-                userStats,
-                endOfFight,
-                setEndOfFight,
-                setWinner,
-                pokemons
-              )
-            }
-          ></button>
-        )}
-      </div>
-    </div>
   );
-  
+
 }
 
 export default RenderFight;
