@@ -22,13 +22,10 @@ describe('App component', () => {
     };
 
     beforeEach(() => {
-        // Mock the initial locations fetch
         fetchData.mockResolvedValueOnce(mockLocations);
-        // Mock the player pokemons fetch (needs to resolve 3 times for each starter)
         fetchData.mockResolvedValueOnce(mockPokemon)
             .mockResolvedValueOnce(mockPokemon)
             .mockResolvedValueOnce(mockPokemon);
-        // Mock area fetch
         fetchData.mockResolvedValueOnce(mockAreaResponse);
     });
 
@@ -77,18 +74,12 @@ describe('App component', () => {
     test('handles API fetch errors gracefully', async () => {
         fetchData.mockRejectedValueOnce(new Error('API Error'));
         render(<App />);
-
-        // The app should still render without crashing
         expect(screen.getByRole('button', { name: /return home/i })).toBeInTheDocument();
     });
 
     test('maintains correct screen title through navigation', async () => {
         render(<App />);
-
-        // Initial state
         expect(await screen.findByText('Choose Location')).toBeInTheDocument();
-
-        // After location selection
         const locationItem = await screen.findByText('Viridian Forest');
         fireEvent.click(locationItem);
 
@@ -100,7 +91,6 @@ describe('App component', () => {
     test('fetches initial data on component mount', async () => {
         render(<App />);
         await waitFor(() => {
-            // Check if fetchData was called for locations and starter pokemon
             expect(fetchData).toHaveBeenCalledWith('https://pokeapi.co/api/v2/location');
             expect(fetchData).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/bulbasaur');
             expect(fetchData).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/charizard');
